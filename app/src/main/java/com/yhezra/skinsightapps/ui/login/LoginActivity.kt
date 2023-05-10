@@ -18,9 +18,36 @@ class LoginActivity : AppCompatActivity() {
             val moveToSignInActivity = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(moveToSignInActivity)
         }
+
+        confInput()
+    }
+    private fun confInput() {
         binding.loginButton.setOnClickListener {
-            val moveToSignInActivity = Intent(this@LoginActivity, MainMenuActivity::class.java)
-            startActivity(moveToSignInActivity)
+            val email = binding.emailEditText.text.toString()
+            val password = binding.passwordEditText.text.toString()
+            when {
+                email.isEmpty() -> {
+                    binding.emailEditTextLayout.error = "Masukkan email"
+                }
+                password.isEmpty() -> {
+                    binding.passwordEditTextLayout.error = "Masukkan password"
+                }
+                else -> {
+                    val moveToSignInActivity = Intent(this@LoginActivity, MainMenuActivity::class.java)
+                    startActivity(moveToSignInActivity)
+                    finish()
+//                    signupViewModel.saveUser(UserModel(name, email, password, false))
+//                    AlertDialog.Builder(this).apply {
+//                        setTitle("Berhasil!")
+//                        setMessage("Akun sudah berhasil dibuat sudah jadi nih. Yuk, login dan belajar coding.")
+//                        setPositiveButton("Lanjut") { _, _ ->
+//                            finish()
+//                        }
+//                        create()
+//                        show()
+//                    }
+                }
+            }
         }
     }
 }
