@@ -14,7 +14,7 @@
   <string name="hint_password">Masukkan password</string>
   <string name="login">Login</string>
   <string name="login_now">Sudah punya akun? Login</string>
-  <string name="sign_up_now">Do not have account yet? Sign Up</string>
+  <string name="sign_up_now">Belum punya akun? Sign Up</string>
   <string name="detect_skin_disease">Klasifikasi Penyakit Kulit</string>
   <string name="detect_skin_tone">Klasifikasi Skintone</string>
 </resources>
