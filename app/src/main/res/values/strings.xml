@@ -22,5 +22,11 @@
   <string name="date_dummy">01/02/2023</string>
   <string name="article_title">Article Title</string>
   <string name="lorem_ipsum">Lorem ipsum dolor sit amet consectetur. Pharetra pellentesque at at amet lectus blandit. Metus risus mi tellus nisi leo cursus a pellentesque ut. Fermentum viverra curabitur eget odio amet vestibulum. Laoreet integer cursus ut netus faucibus. Duis mattis sem diam aliquam nunc quis urna nullam. Congue cursus commodo sit mi duis aliquet orci. Nisi sollicitudin velit imperdiet donec nisl donec. Gravida eget cras ultrices facilisis.\nId donec nisi at tincidunt cras ultricies ut. Risus eu in lorem congue consectetur in. Lacinia pulvinar quam lacus proin id lacus. Eget rhoncus risus odio urna. Varius nisl varius diam in et. Nulla duis id adipiscing malesuada enim magna. Id morbi augue dui ipsum nunc. Nisl etiam sit consequat donec etiam risus ipsum. Etiam magna dis tellus elit eget. Eget eget vivamus in mollis pretium scelerisque. Sed velit ut lorem maecenas lacus nunc.</string>
+  <string name="sample_name">Cantika</string>
+  <string name="sample_email">cantika@gmail.com</string>
+  <string name="name">Name</string>
+  <string name="sample_password">12345678</string>
+  <string name="logout">Logout</string>
+  <string name="edit">edit</string>
 
 </resources>

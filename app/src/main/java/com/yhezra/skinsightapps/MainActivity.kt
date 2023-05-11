@@ -3,6 +3,7 @@ package com.yhezra.skinsightapps
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import com.yhezra.skinsightapps.databinding.ActivityMainBinding
 import com.yhezra.skinsightapps.ui.MainMenuActivity
 import com.yhezra.skinsightapps.ui.signup.SignUpActivity
@@ -17,6 +18,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         Timer().schedule(timerTask {
             val moveToMainMenuActivity = Intent(this@MainActivity, SignUpActivity::class.java)
