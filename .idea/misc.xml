@@ -5,8 +5,12 @@
       <map>
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/drawable/bottom_nav_item_selector.xml" value="0.159" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/drawable/round_corner.xml" value="0.159" />
+        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/drawable/rounded_corner.xml" value="0.159" />
+        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_login.xml" value="0.2223731884057971" />
+        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_main.xml" value="0.2223731884057971" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_main_menu.xml" value="0.264" />
-        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/fragment_detection.xml" value="0.1078125" />
+        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_sign_up.xml" value="0.264" />
+        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/fragment_detection.xml" value="0.264" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/fragment_history.xml" value="0.1078125" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/fragment_home.xml" value="0.1078125" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/fragment_profile.xml" value="0.1078125" />
