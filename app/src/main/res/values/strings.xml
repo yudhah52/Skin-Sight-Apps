@@ -28,5 +28,8 @@
     <string name="sample_password">12345678</string>
     <string name="logout">Logout</string>
     <string name="edit">edit</string>
+  <string name="splashscreen">splashscreen</string>
+  <string name="onboard_description">Dapatkan kulit sehat yang kamu inginkan, coba sekarang dan lihat hasilnya!</string>
+  <string name="onboard_get_started">Get Started</string>
 
 </resources>
