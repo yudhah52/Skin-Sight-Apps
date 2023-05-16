@@ -11,64 +11,64 @@
     android:layout_height="wrap_content">
 
     <ImageView
-      android:id="@+id/imageView1"
+      android:id="@+id/iv_skin_disease"
       android:layout_width="match_parent"
       android:layout_height="250dp"
       android:layout_marginStart="24dp"
       android:layout_marginTop="24dp"
       android:layout_marginEnd="24dp"
-      android:background="@drawable/rounded_corner_20"
+      android:background="@drawable/rounded_corner_20_white"
       android:clipToOutline="true"
       android:scaleType="centerCrop"
-      android:src="@drawable/skin_detection_img"
+      android:src="@drawable/img_skin_detection"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-      android:id="@+id/skinDiseaseButton"
+      android:id="@+id/btn_skin_disease"
       android:layout_width="240dp"
       android:layout_height="64dp"
       android:layout_marginBottom="20dp"
-      android:background="@drawable/my_button"
+      android:background="@drawable/rounded_corner_20_green"
       android:text="@string/detect_skin_disease"
       android:textAllCaps="false"
       android:textColor="@color/white"
       android:textStyle="bold"
-      app:layout_constraintBottom_toBottomOf="@id/imageView1"
-      app:layout_constraintEnd_toEndOf="@id/imageView1"
-      app:layout_constraintStart_toStartOf="@id/imageView1" />
+      app:layout_constraintBottom_toBottomOf="@id/iv_skin_disease"
+      app:layout_constraintEnd_toEndOf="@id/iv_skin_disease"
+      app:layout_constraintStart_toStartOf="@id/iv_skin_disease" />
 
     <ImageView
-      android:id="@+id/imageView2"
+      android:id="@+id/iv_skin_tone"
       android:layout_width="match_parent"
       android:layout_height="250dp"
       android:layout_marginStart="24dp"
       android:layout_marginTop="24dp"
       android:layout_marginEnd="24dp"
       android:layout_marginBottom="100dp"
-      android:background="@drawable/rounded_corner_20"
+      android:background="@drawable/rounded_corner_20_white"
       android:clipToOutline="true"
       android:scaleType="centerCrop"
-      android:src="@drawable/skin_tone_img"
+      android:src="@drawable/img_skin_tone"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/imageView1" />
+      app:layout_constraintTop_toBottomOf="@id/iv_skin_disease" />
 
     <Button
-      android:id="@+id/skinToneButton"
+      android:id="@+id/btn_skin_tone"
       android:layout_width="240dp"
       android:layout_height="64dp"
       android:layout_marginBottom="20dp"
-      android:background="@drawable/my_button"
+      android:background="@drawable/rounded_corner_20_green"
       android:text="@string/detect_skin_tone"
       android:textAllCaps="false"
       android:textColor="@color/white"
       android:textStyle="bold"
-      app:layout_constraintBottom_toBottomOf="@id/imageView2"
-      app:layout_constraintEnd_toEndOf="@id/imageView2"
-      app:layout_constraintStart_toStartOf="@id/imageView2" />
+      app:layout_constraintBottom_toBottomOf="@id/iv_skin_tone"
+      app:layout_constraintEnd_toEndOf="@id/iv_skin_tone"
+      app:layout_constraintStart_toStartOf="@id/iv_skin_tone" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

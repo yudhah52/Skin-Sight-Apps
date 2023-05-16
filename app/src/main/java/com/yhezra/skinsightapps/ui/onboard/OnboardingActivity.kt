@@ -14,7 +14,7 @@ class OnboardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.onboardButton.setOnClickListener {
+        binding.btnOnboard.setOnClickListener {
             val moveToSignInActivity = Intent(this@OnboardingActivity, SignUpActivity::class.java)
             startActivity(moveToSignInActivity)
         }

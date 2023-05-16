@@ -15,7 +15,7 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.loginNow.setOnClickListener {
+        binding.btnTvLogin.setOnClickListener {
             val moveToSignInActivity = Intent(this@SignUpActivity, LoginActivity::class.java)
             startActivity(moveToSignInActivity)
         }
@@ -24,19 +24,19 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun confInput() {
-        binding.signupButton.setOnClickListener {
-            val name = binding.nameEditText.text.toString()
-            val email = binding.emailEditText.text.toString()
-            val password = binding.passwordEditText.text.toString()
+        binding.btnSignup.setOnClickListener {
+            val name = binding.etName.text.toString()
+            val email = binding.etEmail.text.toString()
+            val password = binding.etPassword.text.toString()
             when {
                 name.isEmpty() -> {
-                    binding.nameEditTextLayout.error = "Masukkan nama"
+                    binding.etNameLayout.error = "Masukkan nama"
                 }
                 email.isEmpty() -> {
-                    binding.emailEditTextLayout.error = "Masukkan email"
+                    binding.etEmailLayout.error = "Masukkan email"
                 }
                 password.isEmpty() -> {
-                    binding.passwordEditTextLayout.error = "Masukkan password"
+                    binding.etPasswordLayout.error = "Masukkan password"
                 }
                 else -> {
                     val moveToSignInActivity = Intent(this@SignUpActivity, MainMenuActivity::class.java)
