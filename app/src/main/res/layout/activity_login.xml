@@ -15,7 +15,7 @@
           android:layout_width="0dp"
           android:layout_height="110dp"
           android:layout_marginStart="24dp"
-          android:layout_marginTop="32dp"
+          android:layout_marginTop="24dp"
           android:layout_marginEnd="24dp"
           android:background="@drawable/rounded_corner_20"
           android:clipToOutline="true"
@@ -30,7 +30,7 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="24dp"
-          android:layout_marginTop="32dp"
+          android:layout_marginTop="24dp"
           android:layout_marginEnd="24dp"
           android:text="@string/login"
           android:textColor="@color/black"
@@ -125,9 +125,9 @@
           android:id="@+id/signUpNow"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="8dp"
+          android:layout_marginTop="64dp"
           android:text="@string/sign_up_now"
-          app:layout_constraintBottom_toTopOf="@id/loginButton"
+          app:layout_constraintTop_toBottomOf="@id/passwordEditTextLayout"
           app:layout_constraintEnd_toEndOf="@+id/loginButton"/>
 
         <!--    android:background="@drawable/my_button"-->
@@ -137,6 +137,7 @@
           android:layout_height="64dp"
           android:layout_marginStart="24dp"
           android:layout_marginEnd="24dp"
+          android:layout_marginTop="8dp"
           android:layout_marginBottom="48dp"
           android:background="@drawable/my_button"
           android:text="@string/login"
@@ -147,14 +148,8 @@
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/guideline" />
+          app:layout_constraintTop_toBottomOf="@id/signUpNow" />
 
-        <androidx.constraintlayout.widget.Guideline
-          android:id="@+id/guideline"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          app:layout_constraintGuide_begin="600dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
