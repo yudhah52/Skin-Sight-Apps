@@ -12,19 +12,20 @@
 
 
         <ImageView
-          android:id="@+id/img_logo"
-          android:layout_width="0dp"
-          android:layout_height="110dp"
-          android:layout_marginStart="24dp"
-          android:layout_marginTop="24dp"
-          android:layout_marginEnd="24dp"
-          android:background="@drawable/rounded_corner_20_white"
-          android:clipToOutline="true"
-          android:scaleType="centerCrop"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          app:srcCompat="@drawable/img_gray_sign" />
+            android:id="@+id/img_logo_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/rounded_corner_20_white"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_logo_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
           android:id="@+id/tv_title"
@@ -40,7 +41,7 @@
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="0.0"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/img_logo" />
+          app:layout_constraintTop_toBottomOf="@id/img_logo_horizontal" />
 
         <TextView
           android:id="@+id/tv_name"
