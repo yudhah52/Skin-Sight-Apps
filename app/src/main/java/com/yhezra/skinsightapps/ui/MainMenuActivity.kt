@@ -2,6 +2,7 @@ package com.yhezra.skinsightapps.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,9 +21,12 @@ class MainMenuActivity : AppCompatActivity() {
         binding = ActivityMainMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        setToolBar()
+        setBottomNav()
 
+    }
+
+    private fun setBottomNav() {
         val bottomNavView: BottomNavigationView = binding.bottomNavView
         val bottomNavController = findNavController(R.id.bottom_nav_host_fragment)
         bottomNavController.addOnDestinationChangedListener { _, destination, _ ->
@@ -40,5 +44,12 @@ class MainMenuActivity : AppCompatActivity() {
         setupActionBarWithNavController(bottomNavController,appBarConfiguration)
 
         bottomNavView.setupWithNavController(bottomNavController)
+    }
+
+    private fun setToolBar() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        binding.toolbar.btnBackToolbar.visibility = View.GONE
     }
 }
