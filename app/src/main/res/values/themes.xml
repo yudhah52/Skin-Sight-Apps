@@ -13,6 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="colorTertiary">@color/dark_green</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
     </style>
 
     <style name="roundedCorner20">
