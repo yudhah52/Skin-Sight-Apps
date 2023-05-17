@@ -1,0 +1,46 @@
+package com.yhezra.skinsightapps.ui.onboard.adapter
+
+import android.view.View
+import android.widget.ImageView
+import androidx.viewpager2.widget.ViewPager2
+
+class OnboardingPageChangeCallback(
+    private val viewPager: ViewPager2,
+    private val btnLeft: ImageView,
+    private val btnRight: ImageView,
+    private val pageSize:Int,
+) : ViewPager2.OnPageChangeCallback() {
+    private var selectedPosition = 0
+
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+        setButtonVisibility()
+    }
+
+    override fun onPageSelected(position: Int) {
+        selectedPosition = position
+    }
+
+    override fun onPageScrollStateChanged(state: Int) {
+        // Tidak perlu implementasi
+    }
+
+    fun getSelectedPosition(): Int {
+        return selectedPosition
+    }
+
+    fun setCurrentItem(position: Int) {
+        viewPager.setCurrentItem(position, true)
+    }
+
+    private fun setButtonVisibility() {
+        if (selectedPosition == pageSize - 1)
+            btnRight.visibility = View.GONE
+        else if (selectedPosition == 0)
+           btnLeft.visibility = View.GONE
+        else {
+            btnLeft.visibility = View.VISIBLE
+            btnRight.visibility = View.VISIBLE
+        }
+    }
+}
