@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityOptionsCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.data.local.model.Onboard
@@ -51,7 +52,7 @@ class OnboardingActivity : AppCompatActivity() {
             btnOnboard.setOnClickListener {
                 val moveToSignInActivity =
                     Intent(this@OnboardingActivity, SignUpActivity::class.java)
-                startActivity(moveToSignInActivity)
+                startActivity(moveToSignInActivity, ActivityOptionsCompat.makeSceneTransitionAnimation(this@OnboardingActivity).toBundle())
             }
             btnRightOnboard.setOnClickListener {
                 if (currentPosition < onboardList.size - 1)
