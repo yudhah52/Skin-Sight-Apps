@@ -10,7 +10,6 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
 
-
         <ImageView
             android:id="@+id/img_logo_horizontal"
             android:layout_width="0dp"
@@ -105,7 +104,7 @@
           android:layout_marginStart="24dp"
           android:layout_marginTop="8dp"
           android:layout_marginEnd="24dp"
-          app:boxCornerRadiusBottomEnd="24dp"
+          app:boxCornerRadiusBottomEnd="12dp"
           app:boxCornerRadiusBottomStart="12dp"
           app:boxCornerRadiusTopEnd="12dp"
           app:boxCornerRadiusTopStart="12dp"
