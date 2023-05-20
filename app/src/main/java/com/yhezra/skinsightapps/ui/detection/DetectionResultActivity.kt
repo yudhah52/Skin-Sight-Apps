@@ -1,5 +1,6 @@
 package com.yhezra.skinsightapps.ui.detection
 
+import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.yhezra.skinsightapps.databinding.ActivityDetectionResultBinding
@@ -10,5 +11,9 @@ class DetectionResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetectionResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
+
+    companion object {
+        const val CAMERA_X_RESULT = 200
     }
 }
