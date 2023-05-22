@@ -10,6 +10,7 @@ import android.view.View
 import androidx.appcompat.widget.Toolbar
 import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.databinding.ActivityImagePreviewBinding
+import com.yhezra.skinsightapps.ui.detection.DetectionResultActivity
 
 class ImagePreviewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityImagePreviewBinding
@@ -20,6 +21,14 @@ class ImagePreviewActivity : AppCompatActivity() {
 
         setToolBar()
         setPreviewImage()
+        setAction()
+    }
+
+    private fun setAction() {
+        binding.btnUpload.setOnClickListener{
+            val intent = Intent(this@ImagePreviewActivity,DetectionResultActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setPreviewImage() {

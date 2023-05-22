@@ -50,6 +50,6 @@ class MainMenuActivity : AppCompatActivity() {
         val toolbar: Toolbar = binding.toolbar.toolbar
         setSupportActionBar(toolbar)
 
-        binding.toolbar.btnBackToolbar.visibility = View.GONE
+        binding.toolbar.btnBackToolbar.visibility = View.INVISIBLE
     }
 }

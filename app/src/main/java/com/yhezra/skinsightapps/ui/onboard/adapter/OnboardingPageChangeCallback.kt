@@ -37,9 +37,9 @@ class OnboardingPageChangeCallback(
 
     private fun setButtonVisibility() {
         if (selectedPosition == pageSize - 1)
-            btnRight.visibility = View.GONE
+            btnRight.visibility = View.INVISIBLE
         else if (selectedPosition == 0)
-            btnLeft.visibility = View.GONE
+            btnLeft.visibility = View.INVISIBLE
         else {
             btnLeft.visibility = View.VISIBLE
             btnRight.visibility = View.VISIBLE
@@ -48,6 +48,6 @@ class OnboardingPageChangeCallback(
         if(selectedPosition == pageSize - 1)
             btnOnboard.visibility = View.VISIBLE
         else
-            btnOnboard.visibility = View.GONE
+            btnOnboard.visibility = View.INVISIBLE
     }
 }
