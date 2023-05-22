@@ -47,7 +47,7 @@ class MainMenuActivity : AppCompatActivity() {
     }
 
     private fun setToolBar() {
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        val toolbar: Toolbar = binding.toolbar.toolbar
         setSupportActionBar(toolbar)
 
         binding.toolbar.btnBackToolbar.visibility = View.GONE

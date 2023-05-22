@@ -35,6 +35,8 @@
     <string name="onboard_description">Dapatkan kulit sehat yang kamu inginkan, coba sekarang dan lihat hasilnya!</string>
     <string name="onboard_get_started">Get Started</string>
     <string name="percentage">40%</string>
+    <string name="upload">Upload</string>
+    <string name="preview">Preview</string>
     <string name="allow_permission">Mohon izinkan akses kamera pada pengaturan</string>
 
 

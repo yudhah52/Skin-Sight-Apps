@@ -1,11 +1,13 @@
 package com.yhezra.skinsightapps.ui.camera
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -14,7 +16,9 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.yhezra.skinsightapps.data.remote.utils.createFile
+import com.yhezra.skinsightapps.data.remote.utils.uriToFile
 import com.yhezra.skinsightapps.databinding.ActivityCameraBinding
+import java.io.File
 
 class CameraActivity : AppCompatActivity() {
 
@@ -35,6 +39,9 @@ class CameraActivity : AppCompatActivity() {
         binding.apply {
             btnCamera.setOnClickListener { takePhoto() }
             btnSwitchCamera.setOnClickListener { startCamera() }
+            btnGallery.setOnClickListener{
+                startGallery()
+            }
         }
     }
 
@@ -72,6 +79,28 @@ class CameraActivity : AppCompatActivity() {
                 }
             }
         )
+    }
+
+    private val launcherIntentGallery =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val selectedImg = result.data?.data as Uri
+                selectedImg.let { uri ->
+                    val imageFile = uriToFile(uri, this@CameraActivity)
+                    val intent = Intent(this@CameraActivity,ImagePreviewActivity::class.java)
+                    intent.putExtra("picture", imageFile.absolutePath)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+
+    private fun startGallery() {
+        val intent = Intent()
+        intent.action = Intent.ACTION_GET_CONTENT
+        intent.type = "image/*"
+        val chooser = Intent.createChooser(intent, "Choose a Picture")
+        launcherIntentGallery.launch(chooser)
     }
 
     private fun startCamera() {
