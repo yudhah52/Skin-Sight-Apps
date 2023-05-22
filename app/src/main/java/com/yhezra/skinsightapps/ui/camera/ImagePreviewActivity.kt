@@ -6,13 +6,13 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.yhezra.skinsightapps.databinding.ActivityImageResultBinding
+import com.yhezra.skinsightapps.databinding.ActivityImagePreviewBinding
 
-class ImageResultActivity : AppCompatActivity() {
-    private lateinit var binding :ActivityImageResultBinding
+class ImagePreviewActivity : AppCompatActivity() {
+    private lateinit var binding :ActivityImagePreviewBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityImageResultBinding.inflate(layoutInflater)
+        binding = ActivityImagePreviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Mengambil data gambar dari intent

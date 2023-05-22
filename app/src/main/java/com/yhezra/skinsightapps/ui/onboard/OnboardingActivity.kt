@@ -44,9 +44,11 @@ class OnboardingActivity : AppCompatActivity() {
             viewPager = binding.viewpagerOnboard,
             btnLeft = binding.btnLeftOnboard,
             btnRight = binding.btnRightOnboard,
+            btnOnboard= binding.btnOnboard,
             pageSize = onboardList.size,
         )
         setOnboardList()
+        setButtonVisibility()
 
         binding.apply {
             btnOnboard.setOnClickListener {
@@ -71,14 +73,22 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     private fun setButtonVisibility() {
-        if (currentPosition == onboardList.size - 1)
-            binding.btnRightOnboard.visibility = View.GONE
-        else if (currentPosition == 0)
-            binding.btnLeftOnboard.visibility = View.GONE
-        else {
-            binding.btnLeftOnboard.visibility = View.VISIBLE
-            binding.btnRightOnboard.visibility = View.VISIBLE
+        binding.apply {
+            if (currentPosition == onboardList.size - 1)
+                btnRightOnboard.visibility = View.GONE
+            else if (currentPosition == 0)
+                btnLeftOnboard.visibility = View.GONE
+            else {
+                btnLeftOnboard.visibility = View.VISIBLE
+                btnRightOnboard.visibility = View.VISIBLE
+            }
+
+            if(currentPosition == onboardList.size - 1)
+                btnOnboard.visibility = View.VISIBLE
+            else
+                btnOnboard.visibility = View.GONE
         }
+
     }
 
     private fun setOnboardList() {

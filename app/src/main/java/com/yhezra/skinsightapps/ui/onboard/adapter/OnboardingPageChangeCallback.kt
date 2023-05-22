@@ -1,6 +1,7 @@
 package com.yhezra.skinsightapps.ui.onboard.adapter
 
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import androidx.viewpager2.widget.ViewPager2
 
@@ -8,6 +9,7 @@ class OnboardingPageChangeCallback(
     private val viewPager: ViewPager2,
     private val btnLeft: ImageView,
     private val btnRight: ImageView,
+    private val btnOnboard: Button,
     private val pageSize:Int,
 ) : ViewPager2.OnPageChangeCallback() {
     private var selectedPosition = 0
@@ -37,10 +39,15 @@ class OnboardingPageChangeCallback(
         if (selectedPosition == pageSize - 1)
             btnRight.visibility = View.GONE
         else if (selectedPosition == 0)
-           btnLeft.visibility = View.GONE
+            btnLeft.visibility = View.GONE
         else {
             btnLeft.visibility = View.VISIBLE
             btnRight.visibility = View.VISIBLE
         }
+
+        if(selectedPosition == pageSize - 1)
+            btnOnboard.visibility = View.VISIBLE
+        else
+            btnOnboard.visibility = View.GONE
     }
 }

@@ -61,7 +61,7 @@ class CameraActivity : AppCompatActivity() {
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val intent = Intent(this@CameraActivity,ImageResultActivity::class.java)
+                    val intent = Intent(this@CameraActivity,ImagePreviewActivity::class.java)
                     intent.putExtra("picture", photoFile.absolutePath)
                     intent.putExtra(
                         "isBackCamera",

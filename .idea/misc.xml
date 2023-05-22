@@ -6,6 +6,7 @@
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/drawable/bottom_nav_item_selector.xml" value="0.159" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/drawable/bottom_nav_round_corner.xml" value="0.1185" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/drawable/ic_arrow_left.xml" value="0.187" />
+        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/drawable/ic_arrow_right.xml" value="0.1375" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/drawable/ic_arrow_right_circle.xml" value="0.119" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/drawable/my_button.xml" value="0.119" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/drawable/round_corner.xml" value="0.159" />
@@ -19,7 +20,7 @@
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_main.xml" value="0.2223731884057971" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_main_menu.xml" value="0.152" />
-        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_onboarding.xml" value="0.24635416666666668" />
+        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_onboarding.xml" value="0.128" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_sign_up.xml" value="0.152" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/fragment_detection.xml" value="0.264" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/fragment_history.xml" value="0.2" />

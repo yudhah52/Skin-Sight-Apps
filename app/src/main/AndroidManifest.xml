@@ -19,7 +19,7 @@
         android:theme="@style/Theme.SkinSightApps"
         tools:targetApi="31">
         <activity
-            android:name=".ui.camera.ImageResultActivity"
+            android:name=".ui.camera.ImagePreviewActivity"
             android:exported="false" />
         <activity
             android:name=".ui.camera.CameraActivity"
