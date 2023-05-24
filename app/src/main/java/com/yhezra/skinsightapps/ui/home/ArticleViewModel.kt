@@ -13,10 +13,14 @@ import retrofit2.Response
 
 class ArticleViewModel : ViewModel() {
     private val _listArticle = MutableLiveData<List<ArticleItem>>()
-    val listUser: LiveData<List<ArticleItem>> = _listArticle
+    val listArticle: LiveData<List<ArticleItem>> = _listArticle
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
+
+    init {
+        getListArticle()
+    }
 
     fun getListArticle() {
         _isLoading.value = true
@@ -35,6 +39,7 @@ class ArticleViewModel : ViewModel() {
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
+                _isLoading.value = false
             }
 
             override fun onFailure(call: Call<ArticleResponse>, t: Throwable) {
