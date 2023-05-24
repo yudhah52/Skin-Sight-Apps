@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName
 
 data class ArticleResponse(
 
-	@field:SerializedName("msg")
-	val msg: String? = null,
-
 	@field:SerializedName("data")
-	val data: List<ArticleItem?>? = null,
+	val data: List<ArticleItem>,
 
-	@field:SerializedName("success")
-	val success: Boolean? = null
+	@field:SerializedName("message")
+	val message: String,
+
+	@field:SerializedName("status")
+	val status: String
 )
