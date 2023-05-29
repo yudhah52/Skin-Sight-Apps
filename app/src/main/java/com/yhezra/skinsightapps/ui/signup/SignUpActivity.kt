@@ -2,18 +2,35 @@ package com.yhezra.skinsightapps.ui.signup
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityOptionsCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.yhezra.skinsightapps.databinding.ActivitySignUpBinding
 import com.yhezra.skinsightapps.ui.MainMenuActivity
+import com.yhezra.skinsightapps.ui.auth.AuthViewModel
+import com.yhezra.skinsightapps.ui.auth.AuthViewModelFactory
 import com.yhezra.skinsightapps.ui.login.LoginActivity
+import com.yhezra.skinsightapps.data.local.Result
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
+
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
+    private val authViewModel: AuthViewModel by viewModels {
+        AuthViewModelFactory.getInstance(dataStore)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -36,6 +53,7 @@ class SignUpActivity : AppCompatActivity() {
             val name = binding.etName.text.toString()
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
+            val phone = "08123123123"
             when {
                 name.isEmpty() -> {
                     binding.etNameLayout.error = "Masukkan nama"
@@ -46,6 +64,39 @@ class SignUpActivity : AppCompatActivity() {
                 password.isEmpty() -> {
                     binding.etPasswordLayout.error = "Masukkan password"
                 }
+                Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length >= 8 -> {
+                    binding.apply {
+                        etName.onEditorAction(EditorInfo.IME_ACTION_DONE)
+                        etEmail.onEditorAction(EditorInfo.IME_ACTION_DONE)
+                        etPassword.onEditorAction(EditorInfo.IME_ACTION_DONE)
+                    }
+                    authViewModel.register(email, password, name, phone).observe(this) { result ->
+                        when (result) {
+                            is Result.Loading -> {
+                                binding.progressBar.visibility = View.VISIBLE
+                            }
+                            is Result.Success -> {
+                                binding.progressBar.visibility = View.GONE
+                                AlertDialog.Builder(this).apply {
+                                    setTitle("Yey!")
+                                    setMessage("Akun berhasil terdaftar! Masuk dan bagikan cerita!")
+                                    setPositiveButton("Lanjut") { _, _ ->
+                                        finish()
+                                    }
+                                    create()
+                                    show()
+                                }
+                            }
+                            is Result.Error -> {
+                                binding.progressBar.visibility = View.GONE
+                                Toast.makeText(
+                                    this@SignUpActivity, result.error, Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                }
+
                 else -> {
                     val moveToMainMenuActivity =
                         Intent(this@SignUpActivity, MainMenuActivity::class.java)
@@ -71,12 +122,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun playAnimation() {
-//        ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
-//            duration = 6000
-//            repeatCount = ObjectAnimator.INFINITE
-//            repeatMode = ObjectAnimator.REVERSE
-//        }.start()
-
         val logo =
             ObjectAnimator.ofFloat(binding.imgLogoHorizontal, View.ALPHA, 1f).setDuration(500)
         val title = ObjectAnimator.ofFloat(binding.tvTitle, View.ALPHA, 1f).setDuration(500)
@@ -89,16 +134,6 @@ class SignUpActivity : AppCompatActivity() {
             ObjectAnimator.ofFloat(binding.etPasswordLayout, View.ALPHA, 1f).setDuration(500)
         val loginNow = ObjectAnimator.ofFloat(binding.btnTvLogin, View.ALPHA, 1f).setDuration(500)
         val btnSignup = ObjectAnimator.ofFloat(binding.btnSignup, View.ALPHA, 1f).setDuration(500)
-
-//        val tgtname = AnimatorSet().apply {
-//            playTogether(nameTextView, nameEditTextLayout)
-//        }
-//        val tgtemail = AnimatorSet().apply {
-//            playTogether(emailTextView, emailEditTextLayout)
-//        }
-//        val tgtpass = AnimatorSet().apply {
-//            playTogether(passwordTextView, passwordEditTextLayout)
-//        }
 
         AnimatorSet().apply {
             playTogether(

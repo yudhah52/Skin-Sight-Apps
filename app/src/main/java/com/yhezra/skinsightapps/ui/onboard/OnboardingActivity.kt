@@ -4,11 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityOptionsCompat
-import androidx.viewpager2.widget.ViewPager2
 import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.data.local.model.Onboard
 import com.yhezra.skinsightapps.databinding.ActivityOnboardingBinding
+import com.yhezra.skinsightapps.ui.MainMenuActivity
 import com.yhezra.skinsightapps.ui.onboard.adapter.OnboardListAdapter
 import com.yhezra.skinsightapps.ui.onboard.adapter.OnboardingPageChangeCallback
 import com.yhezra.skinsightapps.ui.signup.SignUpActivity
@@ -39,6 +40,15 @@ class OnboardingActivity : AppCompatActivity() {
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+//        authViewModel.isLogin().observe(this) {
+//            if (!it.isNullOrEmpty()) {
+//                startActivity(Intent(this, MainMenuActivity::class.java))
+//                finish()
+//            }
+//        }
 
         onboardingPageChangeCallback = OnboardingPageChangeCallback(
             viewPager = binding.viewpagerOnboard,
