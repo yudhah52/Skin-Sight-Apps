@@ -1,9 +1,12 @@
 package com.yhezra.skinsightapps.ui.home.article.detailarticle
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.yhezra.skinsightapps.R
@@ -51,11 +54,21 @@ class DetailArticleActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setDataArticle(detailArticle: DataDetailArticle) {
         binding.apply {
-            tvTitleArticle.text = detailArticle.title
-            tvDescArticle.text = detailArticle.content
             Glide.with(root)
                 .load(detailArticle.imageUrl)
                 .into(ivArticle)
+            tvTitleArticle.text = detailArticle.title
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                tvDescArticle.text =
+                    Html.fromHtml(detailArticle.content, Html.FROM_HTML_MODE_COMPACT)
+            } else {
+                tvDescArticle.text =
+                    HtmlCompat.fromHtml(detailArticle.content, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            }
+
+//            tvDescArticle.text = detailArticle.content
+
         }
     }
 
@@ -73,7 +86,7 @@ class DetailArticleActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when(v.id){
+        when (v.id) {
             R.id.btn_back_toolbar -> {
                 finish()
             }
