@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName
 
 data class DataDetailArticle(
 
-    @field:SerializedName("image_url")
-    val imageUrl: String? = null,
+    @field:SerializedName("imageUrl")
+    val imageUrl: String,
 
     @field:SerializedName("description")
-    val description: String? = null,
-
-    @field:SerializedName("id")
-    val id: Int? = null,
+    val description: String,
 
     @field:SerializedName("title")
-    val title: String? = null
+    val title: String,
+
+    @field:SerializedName("content")
+    val content: String
 )

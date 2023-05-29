@@ -31,7 +31,7 @@
             android:name=".ui.onboard.OnboardingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.detailarticle.DetailArticleActivity"
+            android:name=".ui.home.article.detailarticle.DetailArticleActivity"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"

@@ -1,5 +1,6 @@
 package com.yhezra.skinsightapps.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,7 +11,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yhezra.skinsightapps.data.remote.model.article.ArticleItem
 import com.yhezra.skinsightapps.databinding.FragmentHomeBinding
-import com.yhezra.skinsightapps.ui.home.adapter.ListArticleAdapter
+import com.yhezra.skinsightapps.ui.home.article.detailarticle.DetailArticleActivity
+import com.yhezra.skinsightapps.ui.home.article.adapter.ListArticleAdapter
+import com.yhezra.skinsightapps.ui.home.article.ArticleViewModel
 
 class HomeFragment : Fragment() {
 
@@ -66,6 +69,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun navigateToDetailArticle(article: ArticleItem) {
-
+        val moveToDetail =Intent(requireActivity(), DetailArticleActivity::class.java)
+        moveToDetail.putExtra(DetailArticleActivity.ID_ARTICLE,article.id)
+        startActivity(moveToDetail)
     }
 }

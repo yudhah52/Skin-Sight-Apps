@@ -2,6 +2,7 @@ package com.yhezra.skinsightapps.data.remote.api
 
 import com.yhezra.skinsightapps.data.remote.model.article.ArticleItem
 import com.yhezra.skinsightapps.data.remote.model.article.ArticleResponse
+import com.yhezra.skinsightapps.data.remote.model.detailarticle.DetailArticleResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -13,7 +14,7 @@ interface ArticleApiService {
     @GET("article/{id}")
     fun getDetailArticle(
         @Path("id") id:String
-    ):Call<ArticleResponse>
+    ):Call<DetailArticleResponse>
 //
 //    @Headers("Authorization: token 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")
 //    @GET("users")

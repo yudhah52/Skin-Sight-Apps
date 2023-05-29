@@ -14,8 +14,8 @@
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/drawable/rounded_corner_10.xml" value="0.1175" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/drawable/rounded_corner_20.xml" value="0.119" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_camera.xml" value="0.2" />
-        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_detail_article.xml" value="0.22282608695652173" />
-        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_detection_result.xml" value="0.176" />
+        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_detail_article.xml" value="0.264" />
+        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_detection_result.xml" value="0.1" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_image_preview.xml" value="0.12708333333333333" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_image_result.xml" value="0.25" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/activity_login.xml" value="0.2" />
@@ -27,7 +27,7 @@
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/fragment_history.xml" value="0.2" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/fragment_profile.xml" value="0.144" />
-        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/item_article.xml" value="0.2" />
+        <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/item_article.xml" value="0.18867924528301888" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/item_detection_result.xml" value="0.2453125" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/item_history.xml" value="0.2" />
         <entry key="..\:/Users/yudha/AndroidStudioProjects/SkinSightApps/app/src/main/res/layout/item_onboard.xml" value="0.10400000000000001" />

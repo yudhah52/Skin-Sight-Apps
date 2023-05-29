@@ -1,4 +1,4 @@
-package com.yhezra.skinsightapps.ui.home.adapter
+package com.yhezra.skinsightapps.ui.home.article.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
