@@ -50,6 +50,7 @@ class DetailArticleActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setToolbar() {
         binding.toolbar.btnBackToolbar.setOnClickListener(this)
+        binding.toolbar.tvToolbarTitle.text = "Article Detail"
     }
 
     private fun setDataArticle(detailArticle: DataDetailArticle) {

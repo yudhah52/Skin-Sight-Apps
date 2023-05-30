@@ -44,7 +44,7 @@
                 android:adjustViewBounds="true"
                 android:background="@color/light_cream"
                 android:clipToOutline="true"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 tools:src="@drawable/img_sample"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
