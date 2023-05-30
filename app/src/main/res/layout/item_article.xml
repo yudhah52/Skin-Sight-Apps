@@ -12,22 +12,41 @@
     card_view:cardCornerRadius="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/img_item_article"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_item_article"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginHorizontal="12dp"
-            android:layout_marginVertical="8dp"
-            android:background="@drawable/rounded_corner_10_white"
-            android:clipToOutline="true"
+            android:layout_marginVertical="10dp"
+            android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/img_skin_detection" />
+            app:shapeAppearance="@style/roundedCorner20"
+            app:shapeAppearanceOverlay="@style/roundedCorner20"
+            app:srcCompat="@drawable/img_skin_detection"
+            tools:ignore="ImageContrastCheck" />
+
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_item_article"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_marginHorizontal="12dp"-->
+<!--            android:layout_marginVertical="8dp"-->
+<!--            android:background="@drawable/rounded_corner_10_white"-->
+<!--            android:clipToOutline="true"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            card_view:layout_constraintBottom_toBottomOf="parent"-->
+<!--            card_view:layout_constraintStart_toStartOf="parent"-->
+<!--            card_view:layout_constraintTop_toTopOf="parent"-->
+<!--            tools:src="@drawable/img_skin_detection" />-->
 
         <TextView
             android:id="@+id/tv_title_article"
@@ -35,21 +54,22 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:maxLines = "2"
             android:textStyle="bold"
             android:textColor="@color/black"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toEndOf="@id/img_item_article"
-            card_view:layout_constraintTop_toTopOf="@id/img_item_article"
+            card_view:layout_constraintStart_toEndOf="@id/iv_item_article"
+            card_view:layout_constraintTop_toTopOf="@id/iv_item_article"
             tools:text="@string/article_title" />
 
         <TextView
             android:id="@+id/tv_desc_article"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:maxLines="3"
-            card_view:layout_constraintBottom_toBottomOf="@+id/img_item_article"
+            card_view:layout_constraintBottom_toBottomOf="@+id/iv_item_article"
             card_view:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="12dp"
             card_view:layout_constraintStart_toStartOf="@id/tv_title_article"

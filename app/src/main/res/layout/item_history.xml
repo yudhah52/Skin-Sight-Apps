@@ -16,7 +16,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/img_item_article"
+            android:id="@+id/iv_item_article"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginHorizontal="12dp"
@@ -37,8 +37,8 @@
             android:layout_marginEnd="12dp"
             android:textSize="16sp"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toEndOf="@id/img_item_article"
-            card_view:layout_constraintTop_toTopOf="@id/img_item_article"
+            card_view:layout_constraintStart_toEndOf="@id/iv_item_article"
+            card_view:layout_constraintTop_toTopOf="@id/iv_item_article"
             tools:text="@string/date_dummy" />
 
         <TextView

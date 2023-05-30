@@ -34,7 +34,7 @@ class ListArticleAdapter(private val listArticle: List<ArticleItem>) :
             binding.tvDescArticle.text = desc
             Glide.with(binding.root)
                 .load(imageUrl)
-                .into(binding.imgItemArticle)
+                .into(binding.ivItemArticle)
             binding.root.setOnClickListener {
                 onItemClickCallback.onItemArticleClicked(article)
             }
