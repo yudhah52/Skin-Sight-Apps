@@ -18,7 +18,7 @@ import com.yhezra.skinsightapps.databinding.FragmentProfileBinding
 import com.yhezra.skinsightapps.ui.auth.AuthViewModel
 import com.yhezra.skinsightapps.ui.auth.AuthViewModelFactory
 import com.yhezra.skinsightapps.data.local.Result
-import com.yhezra.skinsightapps.ui.signup.SignUpActivity
+import com.yhezra.skinsightapps.ui.auth.signup.SignUpActivity
 
 class ProfileFragment : Fragment() {
 

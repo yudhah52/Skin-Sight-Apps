@@ -34,10 +34,10 @@
             android:name=".ui.home.article.detailarticle.DetailArticleActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".ui.auth.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.signup.SignUpActivity"
+            android:name=".ui.auth.signup.SignUpActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MainMenuActivity"

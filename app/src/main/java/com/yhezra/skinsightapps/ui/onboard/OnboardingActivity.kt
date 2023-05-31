@@ -10,7 +10,7 @@ import com.yhezra.skinsightapps.data.local.model.Onboard
 import com.yhezra.skinsightapps.databinding.ActivityOnboardingBinding
 import com.yhezra.skinsightapps.ui.onboard.adapter.OnboardListAdapter
 import com.yhezra.skinsightapps.ui.onboard.adapter.OnboardingPageChangeCallback
-import com.yhezra.skinsightapps.ui.signup.SignUpActivity
+import com.yhezra.skinsightapps.ui.auth.signup.SignUpActivity
 
 class OnboardingActivity : AppCompatActivity() {
 

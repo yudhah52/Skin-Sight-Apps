@@ -14,12 +14,12 @@ interface UserApiService {
         @Field("phone") phone: String
     ): AuthResponse
 
-//    @FormUrlEncoded
-//    @POST("login")
-//    suspend fun login(
-//        @Field("email") email: String,
-//        @Field("password") password: String
-//    ): LoginResponse
+    @FormUrlEncoded
+    @POST("sign-in")
+    suspend fun login(
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): AuthResponse
 //
 //    @GET("stories")
 //    suspend fun getAllStories(

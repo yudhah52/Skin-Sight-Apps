@@ -1,4 +1,4 @@
-package com.yhezra.skinsightapps.ui.signup
+package com.yhezra.skinsightapps.ui.auth.signup
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -20,17 +20,18 @@ import com.yhezra.skinsightapps.databinding.ActivitySignUpBinding
 import com.yhezra.skinsightapps.ui.MainMenuActivity
 import com.yhezra.skinsightapps.ui.auth.AuthViewModel
 import com.yhezra.skinsightapps.ui.auth.AuthViewModelFactory
-import com.yhezra.skinsightapps.ui.login.LoginActivity
+import com.yhezra.skinsightapps.ui.auth.login.LoginActivity
 import com.yhezra.skinsightapps.data.local.Result
 
 class SignUpActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySignUpBinding
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
 
     private val authViewModel: AuthViewModel by viewModels {
         AuthViewModelFactory.getInstance(dataStore)
     }
+
+    private lateinit var binding: ActivitySignUpBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
