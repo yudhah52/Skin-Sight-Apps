@@ -1,12 +1,12 @@
-package com.yhezra.skinsightapps.data.remote.model
+package com.yhezra.skinsightapps.data.remote.model.auth
 
 import com.google.gson.annotations.SerializedName
 import com.yhezra.skinsightapps.data.remote.model.detailarticle.DataDetailArticle
 
-data class RegisterResponse(
+data class AuthResponse(
 
     @field:SerializedName("data")
-    val data: DataDetailArticle,
+    val data: DataAuth,
 
     @field:SerializedName("message")
     val message: String,

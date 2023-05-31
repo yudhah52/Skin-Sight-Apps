@@ -1,6 +1,6 @@
 package com.yhezra.skinsightapps.data.remote.api
 
-import com.yhezra.skinsightapps.data.remote.model.RegisterResponse
+import com.yhezra.skinsightapps.data.remote.model.auth.AuthResponse
 import retrofit2.http.*
 
 interface UserApiService {
@@ -12,7 +12,7 @@ interface UserApiService {
         @Field("password") password: String,
         @Field("name") name: String,
         @Field("phone") phone: String
-    ): RegisterResponse
+    ): AuthResponse
 
 //    @FormUrlEncoded
 //    @POST("login")

@@ -3,6 +3,7 @@ package com.yhezra.skinsightapps.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,6 +21,8 @@ class MainMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         setToolBar()
         setBottomNav()

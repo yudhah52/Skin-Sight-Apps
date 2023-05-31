@@ -5,7 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.yhezra.skinsightapps.data.di.Injection
-import com.yhezra.skinsightapps.data.remote.UserRepository
+import com.yhezra.skinsightapps.data.remote.repository.UserRepository
 
 class AuthViewModelFactory(private val userRepository: UserRepository) :
     ViewModelProvider.NewInstanceFactory() {

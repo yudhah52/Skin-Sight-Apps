@@ -1,5 +1,6 @@
 package com.yhezra.skinsightapps.data.local.preference
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -9,25 +10,26 @@ import kotlinx.coroutines.flow.map
 
 class UserPreference private constructor(private val dataStore: DataStore<Preferences>) {
 
-//    private val TOKEN_KEY = stringPreferencesKey("token")
-//
-//    fun getToken(): Flow<String?> {
-//        return dataStore.data.map { preferences ->
-//            preferences[TOKEN_KEY]
-//        }
-//    }
-//
-//    suspend fun saveToken(token: String) {
-//        dataStore.edit { preferences ->
-//            preferences[TOKEN_KEY] = "Bearer $token"
-//        }
-//    }
-//
-//    suspend fun logout() {
-//        dataStore.edit {
-//            it.clear()
-//        }
-//    }
+    private val TOKEN_KEY = stringPreferencesKey("token")
+
+    fun getToken(): Flow<String?> {
+        return dataStore.data.map { preferences ->
+            preferences[TOKEN_KEY]
+        }
+    }
+
+    suspend fun saveToken(token: String) {
+        Log.i("TOKEN USER",token)
+        dataStore.edit { preferences ->
+            preferences[TOKEN_KEY] = "Bearer $token"
+        }
+    }
+
+    suspend fun logout() {
+        dataStore.edit {
+            it.clear()
+        }
+    }
 
     companion object {
         @Volatile

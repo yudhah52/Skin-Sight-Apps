@@ -1,10 +1,9 @@
 package com.yhezra.skinsightapps.data.di
 
-import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.yhezra.skinsightapps.data.local.preference.UserPreference
-import com.yhezra.skinsightapps.data.remote.UserRepository
+import com.yhezra.skinsightapps.data.remote.repository.UserRepository
 import com.yhezra.skinsightapps.data.remote.api.ApiConfig
 
 object Injection {

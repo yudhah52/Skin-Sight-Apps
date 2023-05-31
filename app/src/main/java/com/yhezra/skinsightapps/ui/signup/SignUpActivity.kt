@@ -27,6 +27,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
+
     private val authViewModel: AuthViewModel by viewModels {
         AuthViewModelFactory.getInstance(dataStore)
     }
@@ -36,6 +37,12 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        setupAction()
+        playAnimation()
+    }
+
+    private fun setupAction() {
+
         binding.btnTvLogin.setOnClickListener {
             val moveToLoginActivity = Intent(this@SignUpActivity, LoginActivity::class.java)
             startActivity(
@@ -44,11 +51,6 @@ class SignUpActivity : AppCompatActivity() {
             )
         }
 
-        confInput()
-        playAnimation()
-    }
-
-    private fun confInput() {
         binding.btnSignup.setOnClickListener {
             val name = binding.etName.text.toString()
             val email = binding.etEmail.text.toString()
