@@ -32,6 +32,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        articleViewModel.getListArticle()
         articleViewModel.listArticle.observe(viewLifecycleOwner) { listArticle ->
             setArticleData(listArticle)
         }

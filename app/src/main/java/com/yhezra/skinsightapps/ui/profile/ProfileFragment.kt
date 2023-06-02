@@ -34,6 +34,8 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
+    private var isEditing = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,10 +49,10 @@ class ProfileFragment : Fragment() {
 
         authViewModel.isLogin().observe(requireActivity()) { uid ->
             if (uid.isNullOrEmpty()) {
-                Log.i("PROFILE","SIUUUU GA GET DATA")
+                Log.i("PROFILE", "SIUUUU GA GET DATA")
                 navigateToSignup()
-            }else{
-                Log.i("PROFILE","SIUUUU GETDATA $uid")
+            } else {
+                Log.i("PROFILE", "SIUUUU GETDATA $uid")
                 profileViewModel.getDataUser(uid);
             }
         }
@@ -110,6 +112,32 @@ class ProfileFragment : Fragment() {
                         }
                     }
                 }
+            }
+            btnIvEditProfile.setOnClickListener {
+                isEditing = true
+                changeEditable()
+            }
+            btnCancel.setOnClickListener{
+                isEditing=false
+                changeEditable()
+            }
+        }
+    }
+
+    private fun changeEditable() {
+        binding.apply {
+            etName.isEnabled = isEditing
+            etEmail.isEnabled = isEditing
+            if (isEditing) {
+                btnSaveChanges.visibility = View.VISIBLE
+                btnCancel.visibility = View.VISIBLE
+                btnIvEditProfile.visibility = View.GONE
+            }
+            else {
+                btnIvEditProfile.visibility = View.VISIBLE
+                btnSaveChanges.visibility = View.INVISIBLE
+                btnCancel.visibility = View.INVISIBLE
+
             }
         }
     }

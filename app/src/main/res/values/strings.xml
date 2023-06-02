@@ -38,8 +38,10 @@
     <string name="upload">Upload</string>
     <string name="preview">Preview</string>
     <string name="allow_permission">Mohon izinkan akses kamera pada pengaturan</string>
-  <string name="email_invalid">Alamat email tidak valid</string>
+    <string name="email_invalid">Alamat email tidak valid</string>
     <string name="password_invalid">Minimal kata sandi terdiri dari 8 karakter</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>

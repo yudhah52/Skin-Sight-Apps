@@ -23,11 +23,7 @@ class ArticleViewModel : ViewModel() {
     private val _detailArticle = MutableLiveData<DataDetailArticle>()
     val detailArticle: LiveData<DataDetailArticle> = _detailArticle
 
-    init {
-        getListArticle()
-    }
-
-    private fun getListArticle() {
+    fun getListArticle() {
         _isLoading.value = true
         val client = ApiConfig.getArticleApiService().getAllArticle()
         client.enqueue(object : Callback<ArticleResponse> {
@@ -38,9 +34,10 @@ class ArticleViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        val newArticleList =
-                            _listArticle.value?.plus(responseBody.data) ?: responseBody.data
-                        _listArticle.postValue(newArticleList)
+//                        val newArticleList =
+//                            _listArticle.value?.plus(responseBody.data) ?: responseBody.data
+//                        _listArticle.postValue(newArticleList)
+                        _listArticle.value = responseBody.data
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
