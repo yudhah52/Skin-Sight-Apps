@@ -1,6 +1,8 @@
 package com.yhezra.skinsightapps.data.remote.api
 
 import com.yhezra.skinsightapps.data.remote.model.auth.AuthResponse
+import com.yhezra.skinsightapps.data.remote.model.auth.UserResponse
+import retrofit2.Call
 import retrofit2.http.*
 
 interface UserApiService {
@@ -20,6 +22,11 @@ interface UserApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): AuthResponse
+
+    @GET("user/{uid}")
+    fun getDataUser(
+        @Path("uid") uid:String
+    ): Call<UserResponse>
 //
 //    @GET("stories")
 //    suspend fun getAllStories(

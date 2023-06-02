@@ -162,7 +162,7 @@
           android:ems="10"
           android:focusable="false"
           android:inputType="textPassword"
-          android:text="@string/sample_password"
+          tools:text="@string/sample_password"
           app:passwordToggleEnabled="false" />
       </com.google.android.material.textfield.TextInputLayout>
 

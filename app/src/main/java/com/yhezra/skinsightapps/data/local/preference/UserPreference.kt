@@ -21,7 +21,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     suspend fun saveToken(token: String) {
         Log.i("TOKEN USER",token)
         dataStore.edit { preferences ->
-            preferences[TOKEN_KEY] = "Bearer $token"
+            preferences[TOKEN_KEY] = token
         }
     }
 

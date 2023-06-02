@@ -3,6 +3,7 @@ package com.yhezra.skinsightapps.ui.profile
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.yhezra.skinsightapps.databinding.FragmentProfileBinding
 import com.yhezra.skinsightapps.ui.auth.AuthViewModel
 import com.yhezra.skinsightapps.ui.auth.AuthViewModelFactory
 import com.yhezra.skinsightapps.data.local.Result
+import com.yhezra.skinsightapps.data.remote.model.auth.DataUser
 import com.yhezra.skinsightapps.ui.auth.signup.SignUpActivity
 
 class ProfileFragment : Fragment() {
@@ -27,6 +29,7 @@ class ProfileFragment : Fragment() {
     private val authViewModel: AuthViewModel by viewModels {
         AuthViewModelFactory.getInstance(requireContext().dataStore)
     }
+    private val profileViewModel: ProfileViewModel by viewModels()
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -42,13 +45,32 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        authViewModel.isLogin().observe(requireActivity()) {
-            if (it.isNullOrEmpty()) {
+        authViewModel.isLogin().observe(requireActivity()) { uid ->
+            if (uid.isNullOrEmpty()) {
+                Log.i("PROFILE","SIUUUU GA GET DATA")
                 navigateToSignup()
+            }else{
+                Log.i("PROFILE","SIUUUU GETDATA $uid")
+                profileViewModel.getDataUser(uid);
             }
+        }
+        profileViewModel.dataUser.observe(requireActivity()) { dataUser ->
+            setView(dataUser)
+        }
+
+        profileViewModel.isLoading.observe(requireActivity()) {
+            showLoading(it)
         }
 
         setupAction()
+    }
+
+    private fun setView(dataUser: DataUser) {
+
+        binding.apply {
+            etName.setText(dataUser.name)
+            etEmail.setText(dataUser.email)
+        }
     }
 
     private fun navigateToSignup() {
@@ -59,6 +81,14 @@ class ProfileFragment : Fragment() {
         ).show()
         startActivity(Intent(requireActivity(), SignUpActivity::class.java))
         activity?.finish()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
     }
 
 

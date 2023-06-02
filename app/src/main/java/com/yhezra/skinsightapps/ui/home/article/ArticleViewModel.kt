@@ -27,7 +27,7 @@ class ArticleViewModel : ViewModel() {
         getListArticle()
     }
 
-    fun getListArticle() {
+    private fun getListArticle() {
         _isLoading.value = true
         val client = ApiConfig.getArticleApiService().getAllArticle()
         client.enqueue(object : Callback<ArticleResponse> {
