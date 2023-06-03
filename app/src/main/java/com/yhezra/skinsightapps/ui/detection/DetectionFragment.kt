@@ -23,12 +23,13 @@ class DetectionFragment : Fragment() {
 
     private var _binding: FragmentDetectionBinding? = null
     private val binding get() = _binding!!
+    private var isChoseSkinDisease = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDetectionBinding.inflate(inflater,container,false)
+        _binding = FragmentDetectionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -40,7 +41,8 @@ class DetectionFragment : Fragment() {
 
     private fun setupAction() {
         binding.apply {
-            btnSkinDisease.setOnClickListener{
+            btnSkinDisease.setOnClickListener {
+                isChoseSkinDisease = true
                 if (!allPermissionsGranted()) ActivityCompat.requestPermissions(
                     requireActivity(),
                     REQUIRED_PERMISSIONS,
@@ -48,7 +50,8 @@ class DetectionFragment : Fragment() {
                 )
                 else startCameraX()
             }
-            btnSkinTone.setOnClickListener{
+            btnSkinTone.setOnClickListener {
+                isChoseSkinDisease = false
                 if (!allPermissionsGranted()) ActivityCompat.requestPermissions(
                     requireActivity(),
                     REQUIRED_PERMISSIONS,
@@ -86,6 +89,8 @@ class DetectionFragment : Fragment() {
 
     private fun startCameraX() {
         val intent = Intent(requireActivity(), CameraActivity::class.java)
+        intent.putExtra(CameraActivity.IS_DETECTION, true)
+        intent.putExtra(CameraActivity.IS_SKIN_DISEASE, isChoseSkinDisease)
         startActivity(intent)
     }
 

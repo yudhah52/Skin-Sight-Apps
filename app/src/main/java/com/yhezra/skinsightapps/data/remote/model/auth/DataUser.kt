@@ -11,6 +11,9 @@ data class DataUser(
     val name: String,
 
     @field:SerializedName("email")
-    val email: String
+    val email: String,
+
+    @field:SerializedName("imgUrl")
+    val imgUrl:String?=null
 )
 

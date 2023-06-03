@@ -24,6 +24,8 @@ class CameraActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCameraBinding
 
+    private var isDetection = true
+    private var isSkinDisease = true
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private var imageCapture: ImageCapture? = null
 
@@ -32,7 +34,14 @@ class CameraActivity : AppCompatActivity() {
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        getCondition()
+
         setupAction()
+    }
+
+    private fun getCondition() {
+        isDetection = intent.getBooleanExtra(IS_DETECTION,true)
+        isSkinDisease = intent.getBooleanExtra(IS_SKIN_DISEASE,true)
     }
 
     private fun setupAction() {
@@ -69,7 +78,9 @@ class CameraActivity : AppCompatActivity() {
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val intent = Intent(this@CameraActivity,ImagePreviewActivity::class.java)
-                    intent.putExtra("picture", photoFile.absolutePath)
+                    intent.putExtra(ImagePreviewActivity.IMAGE_PATH, photoFile.absolutePath)
+                    intent.putExtra(ImagePreviewActivity.IS_DETECTION,isDetection)
+                    intent.putExtra(ImagePreviewActivity.IS_SKIN_DISEASE,isSkinDisease)
                     intent.putExtra(
                         "isBackCamera",
                         cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA
@@ -88,7 +99,9 @@ class CameraActivity : AppCompatActivity() {
                 selectedImg.let { uri ->
                     val imageFile = uriToFile(uri, this@CameraActivity)
                     val intent = Intent(this@CameraActivity,ImagePreviewActivity::class.java)
-                    intent.putExtra("picture", imageFile.absolutePath)
+                    intent.putExtra(ImagePreviewActivity.IMAGE_PATH, imageFile.absolutePath)
+                    intent.putExtra(ImagePreviewActivity.IS_DETECTION,isDetection)
+                    intent.putExtra(ImagePreviewActivity.IS_SKIN_DISEASE,isSkinDisease)
                     startActivity(intent)
                     finish()
                 }
@@ -150,5 +163,10 @@ class CameraActivity : AppCompatActivity() {
             )
         }
         supportActionBar?.hide()
+    }
+
+    companion object {
+        const val IS_DETECTION = "is_detection"
+        const val IS_SKIN_DISEASE = "is_skin_disease"
     }
 }

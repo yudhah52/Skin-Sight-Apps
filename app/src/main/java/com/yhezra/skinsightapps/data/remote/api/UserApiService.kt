@@ -2,8 +2,10 @@ package com.yhezra.skinsightapps.data.remote.api
 
 import com.yhezra.skinsightapps.data.remote.model.auth.AuthResponse
 import com.yhezra.skinsightapps.data.remote.model.auth.UserResponse
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.io.File
 
 interface UserApiService {
 
@@ -26,6 +28,13 @@ interface UserApiService {
     @GET("user/{uid}")
     fun getDataUser(
         @Path("uid") uid:String
+    ): Call<UserResponse>
+
+    @Multipart
+    @POST("user/{uid}/profile-picture")
+    fun editProfilePicture(
+        @Path("uid") uid:String,
+        @Part file: MultipartBody.Part,
     ): Call<UserResponse>
 //
 //    @GET("stories")
