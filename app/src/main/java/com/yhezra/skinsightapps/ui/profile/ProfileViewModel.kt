@@ -63,13 +63,13 @@ class ProfileViewModel : ViewModel() {
         })
     }
 
-    fun editProfilePicture(uid:String, imageFile: File) {
+    fun editProfilePicture(uid: String, imageFile: File) {
         _isLoading.value = true
         val reducedFile = reduceFileImage(imageFile)
         val requestImageFile = reducedFile.asRequestBody("image/jpeg".toMediaType())
         val imageMultipart: MultipartBody.Part =
             MultipartBody.Part.createFormData("file", imageFile.name, requestImageFile)
-        Log.i("SIUUU","SIUUUU $uid ${imageFile.name} |$imageFile |$imageMultipart")
+        Log.i("SIUUU", "SIUUUU $uid ${imageFile.name} |$imageFile |$imageMultipart")
         val client = ApiConfig.getUserApiService().editProfilePicture(uid, imageMultipart)
         client.enqueue(object : Callback<UserResponse> {
             override fun onResponse(
