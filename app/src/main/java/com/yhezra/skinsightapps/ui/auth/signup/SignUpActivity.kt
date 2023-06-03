@@ -80,15 +80,14 @@ class SignUpActivity : AppCompatActivity() {
                             }
                             is Result.Success -> {
                                 binding.progressBar.visibility = View.GONE
-                                AlertDialog.Builder(this).apply {
-                                    setTitle("Yey!")
-                                    setMessage("Akun berhasil terdaftar! Masuk dan bagikan cerita!")
-                                    setPositiveButton("Lanjut") { _, _ ->
-                                        finish()
-                                    }
-                                    create()
-                                    show()
-                                }
+                                val moveToMainMenuActivity =
+                                    Intent(this@SignUpActivity, MainMenuActivity::class.java)
+                                startActivity(
+                                    moveToMainMenuActivity,
+                                    ActivityOptionsCompat.makeSceneTransitionAnimation(this@SignUpActivity)
+                                        .toBundle()
+                                )
+                                finish()
                             }
                             is Result.Error -> {
                                 binding.progressBar.visibility = View.GONE

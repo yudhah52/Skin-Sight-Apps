@@ -1,18 +1,34 @@
 package com.yhezra.skinsightapps.ui.onboard
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.app.ActivityOptionsCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.data.local.model.Onboard
 import com.yhezra.skinsightapps.databinding.ActivityOnboardingBinding
+import com.yhezra.skinsightapps.ui.MainMenuActivity
+import com.yhezra.skinsightapps.ui.auth.AuthViewModel
+import com.yhezra.skinsightapps.ui.auth.AuthViewModelFactory
 import com.yhezra.skinsightapps.ui.onboard.adapter.OnboardListAdapter
 import com.yhezra.skinsightapps.ui.onboard.adapter.OnboardingPageChangeCallback
 import com.yhezra.skinsightapps.ui.auth.signup.SignUpActivity
 
 class OnboardingActivity : AppCompatActivity() {
+
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
+
+    private val authViewModel: AuthViewModel by viewModels {
+        AuthViewModelFactory.getInstance(dataStore)
+    }
+
+    private var isLogin = false
 
     private lateinit var binding: ActivityOnboardingBinding
     private lateinit var onboardListAdapter: OnboardListAdapter
@@ -40,11 +56,20 @@ class OnboardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        authViewModel.isLogin().observe(this) {
+            if (!it.isNullOrEmpty()) {
+                val moveToMainMenuActivity =
+                    Intent(this@OnboardingActivity, MainMenuActivity::class.java)
+                startActivity(moveToMainMenuActivity)
+                finish()
+            }
+        }
+
         onboardingPageChangeCallback = OnboardingPageChangeCallback(
             viewPager = binding.viewpagerOnboard,
             btnLeft = binding.btnLeftOnboard,
             btnRight = binding.btnRightOnboard,
-            btnOnboard= binding.btnOnboard,
+            btnOnboard = binding.btnOnboard,
             pageSize = onboardList.size,
         )
         setOnboardList()
@@ -54,7 +79,10 @@ class OnboardingActivity : AppCompatActivity() {
             btnOnboard.setOnClickListener {
                 val moveToSignInActivity =
                     Intent(this@OnboardingActivity, SignUpActivity::class.java)
-                startActivity(moveToSignInActivity, ActivityOptionsCompat.makeSceneTransitionAnimation(this@OnboardingActivity).toBundle())
+                startActivity(moveToSignInActivity,
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(this@OnboardingActivity)
+                        .toBundle()
+                )
             }
             btnRightOnboard.setOnClickListener {
                 if (currentPosition < onboardList.size - 1)
@@ -83,7 +111,7 @@ class OnboardingActivity : AppCompatActivity() {
                 btnRightOnboard.visibility = View.VISIBLE
             }
 
-            if(currentPosition == onboardList.size - 1)
+            if (currentPosition == onboardList.size - 1)
                 btnOnboard.visibility = View.VISIBLE
             else
                 btnOnboard.visibility = View.INVISIBLE

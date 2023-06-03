@@ -72,6 +72,7 @@ class LoginActivity : AppCompatActivity() {
                                 binding.progressBar.visibility = View.VISIBLE
                             }
                             is Result.Success -> {
+                                binding.progressBar.visibility = View.GONE
                                 val moveToMainMenuActivity =
                                     Intent(this@LoginActivity, MainMenuActivity::class.java)
                                 startActivity(
@@ -79,7 +80,6 @@ class LoginActivity : AppCompatActivity() {
                                     ActivityOptionsCompat.makeSceneTransitionAnimation(this@LoginActivity)
                                         .toBundle()
                                 )
-                                binding.progressBar.visibility = View.GONE
                             }
                             is Result.Error -> {
                                 binding.progressBar.visibility = View.GONE

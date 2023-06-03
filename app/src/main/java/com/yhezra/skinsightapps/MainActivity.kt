@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-
         authViewModel.isLogin().observe(this) {
             if (!it.isNullOrEmpty()) {
                 isLogin = true
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         Timer().schedule(timerTask {
-            if(isLogin) navigateToMainMenu()
+            if (isLogin) navigateToMainMenu()
             else navigateToOnboard()
 
         }, timerSplashScreen)
