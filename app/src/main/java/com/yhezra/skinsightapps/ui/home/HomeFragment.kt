@@ -13,14 +13,17 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.data.remote.model.article.ArticleItem
 import com.yhezra.skinsightapps.data.remote.model.auth.DataUser
 import com.yhezra.skinsightapps.databinding.FragmentHomeBinding
 import com.yhezra.skinsightapps.databinding.FragmentProfileBinding
+import com.yhezra.skinsightapps.ui.MainMenuActivity
 import com.yhezra.skinsightapps.ui.auth.AuthViewModel
 import com.yhezra.skinsightapps.ui.auth.AuthViewModelFactory
 import com.yhezra.skinsightapps.ui.auth.signup.SignUpActivity
@@ -72,6 +75,22 @@ class HomeFragment : Fragment() {
         }
         articleViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
+        }
+
+        setupAction()
+    }
+
+    private fun setupAction() {
+        binding.btnTry.setOnClickListener {
+
+            val bottomNavView =
+                requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+            bottomNavView.selectedItemId = R.id.navigation_detection
+
+            val navController =
+                Navigation.findNavController(requireActivity(), R.id.bottom_nav_host_fragment)
+            navController.navigate(R.id.navigation_detection)
+
         }
     }
 

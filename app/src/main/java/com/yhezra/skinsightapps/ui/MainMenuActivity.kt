@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -16,6 +17,7 @@ import com.yhezra.skinsightapps.databinding.ActivityMainMenuBinding
 class MainMenuActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainMenuBinding
+    lateinit var bottomNavController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +33,7 @@ class MainMenuActivity : AppCompatActivity() {
 
     private fun setBottomNav() {
         val bottomNavView: BottomNavigationView = binding.bottomNavView
-        val bottomNavController = findNavController(R.id.bottom_nav_host_fragment)
+        bottomNavController = findNavController(R.id.bottom_nav_host_fragment)
         bottomNavController.addOnDestinationChangedListener { _, destination, _ ->
             binding.toolbar.tvToolbarTitle.text = destination.label
         }
