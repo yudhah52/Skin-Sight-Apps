@@ -11,7 +11,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityOptionsCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -92,7 +91,9 @@ class SignUpActivity : AppCompatActivity() {
                             is Result.Error -> {
                                 binding.progressBar.visibility = View.GONE
                                 Toast.makeText(
-                                    this@SignUpActivity, result.error, Toast.LENGTH_SHORT
+                                    this@SignUpActivity,
+                                    "Email sudah terdaftar",
+                                    Toast.LENGTH_SHORT
                                 ).show()
                             }
                         }

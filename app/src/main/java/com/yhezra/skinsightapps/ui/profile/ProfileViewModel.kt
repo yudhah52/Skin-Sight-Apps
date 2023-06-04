@@ -4,14 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import com.yhezra.skinsightapps.data.local.preference.UserPreference
 import com.yhezra.skinsightapps.data.remote.api.ApiConfig
-import com.yhezra.skinsightapps.data.remote.model.article.ArticleResponse
 import com.yhezra.skinsightapps.data.remote.model.auth.DataUser
 import com.yhezra.skinsightapps.data.remote.model.auth.UserResponse
 import com.yhezra.skinsightapps.data.remote.utils.reduceFileImage
-import com.yhezra.skinsightapps.ui.home.article.ArticleViewModel
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -31,7 +27,7 @@ class ProfileViewModel : ViewModel() {
     val isSuccess: LiveData<Boolean> = _isSuccess
 
     fun getDataUser(token: String) {
-        Log.i("siuuu", "suiiii ${token}")
+        Log.i("siuuu", "suiiii $token")
 
         _isLoading.value = true
         val client = ApiConfig.getUserApiService().getDataUser(uid = token)

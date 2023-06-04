@@ -63,7 +63,7 @@ class ArticleViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        _detailArticle.value = responseBody.data!!
+                        _detailArticle.value = responseBody.data
                     }
                     Log.i(TAG, "SIUUU DETAIL $_detailArticle")
                 } else {

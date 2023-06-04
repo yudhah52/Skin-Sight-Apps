@@ -17,7 +17,7 @@ class ListArticleAdapter(private val listArticle: List<ArticleItem>) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is ArticleViewHolder -> holder.bind(listArticle[position] as ArticleItem)
+            is ArticleViewHolder -> holder.bind(listArticle[position])
         }
     }
 

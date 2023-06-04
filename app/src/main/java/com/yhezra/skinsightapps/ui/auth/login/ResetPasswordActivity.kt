@@ -15,8 +15,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.google.android.material.animation.AnimatorSetCompat.playTogether
-import com.google.android.material.snackbar.Snackbar
 import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.data.local.Result
 import com.yhezra.skinsightapps.databinding.ActivityResetPasswordBinding
@@ -75,12 +73,11 @@ class ResetPasswordActivity : AppCompatActivity() {
                             }
                             is Result.Error -> {
                                 binding.progressBar.visibility = View.GONE
-                                Snackbar.make(
-                                    binding.root,
+                                Toast.makeText(
+                                    this@ResetPasswordActivity,
                                     "Email tidak ditemukan",
-                                    Snackbar.LENGTH_SHORT
-                                )
-                                    .show()
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }
@@ -89,7 +86,7 @@ class ResetPasswordActivity : AppCompatActivity() {
                 else -> {
                     Toast.makeText(
                         this@ResetPasswordActivity,
-                        "Invalid email",
+                        "Email invalid",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

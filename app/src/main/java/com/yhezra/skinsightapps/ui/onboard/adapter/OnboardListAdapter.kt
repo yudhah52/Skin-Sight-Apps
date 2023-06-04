@@ -3,8 +3,6 @@ package com.yhezra.skinsightapps.ui.onboard.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.data.local.model.Onboard
 import com.yhezra.skinsightapps.databinding.ItemOnboardBinding
 

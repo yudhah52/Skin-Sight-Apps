@@ -18,7 +18,6 @@ import androidx.core.content.ContextCompat
 import com.yhezra.skinsightapps.data.remote.utils.createFile
 import com.yhezra.skinsightapps.data.remote.utils.uriToFile
 import com.yhezra.skinsightapps.databinding.ActivityCameraBinding
-import java.io.File
 
 class CameraActivity : AppCompatActivity() {
 
@@ -71,7 +70,7 @@ class CameraActivity : AppCompatActivity() {
                 override fun onError(exc: ImageCaptureException) {
                     Toast.makeText(
                         this@CameraActivity,
-                        "Gagal mengambil gambar.",
+                        "Gagal mengambil gambar",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -138,7 +137,7 @@ class CameraActivity : AppCompatActivity() {
             } catch (exc: Exception) {
                 Toast.makeText(
                     this@CameraActivity,
-                    "Gagal memunculkan kamera.",
+                    "Gagal memunculkan kamera",
                     Toast.LENGTH_SHORT
                 ).show()
             }

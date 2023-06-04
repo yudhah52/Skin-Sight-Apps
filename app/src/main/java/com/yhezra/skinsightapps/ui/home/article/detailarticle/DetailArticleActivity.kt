@@ -7,7 +7,6 @@ import android.text.Html
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.text.HtmlCompat
-import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.data.remote.model.detailarticle.DataDetailArticle

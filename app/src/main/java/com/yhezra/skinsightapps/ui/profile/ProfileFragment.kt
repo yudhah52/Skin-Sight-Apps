@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color.green
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
@@ -28,7 +26,6 @@ import com.yhezra.skinsightapps.data.local.Result
 import com.yhezra.skinsightapps.data.remote.model.auth.DataUser
 import com.yhezra.skinsightapps.ui.auth.signup.SignUpActivity
 import com.yhezra.skinsightapps.ui.camera.CameraActivity
-import com.yhezra.skinsightapps.ui.detection.DetectionFragment
 
 class ProfileFragment : Fragment() {
 
@@ -47,7 +44,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -61,7 +58,7 @@ class ProfileFragment : Fragment() {
                 navigateToSignup()
             } else {
                 Log.i("PROFILE", "SIUUUU GETDATA $uid")
-                profileViewModel.getDataUser(uid);
+                profileViewModel.getDataUser(uid)
             }
         }
         profileViewModel.dataUser.observe(requireActivity()) { dataUser ->
@@ -119,7 +116,11 @@ class ProfileFragment : Fragment() {
                         }
                         is Result.Error -> {
                             binding.progressBar.visibility = View.GONE
-                            Toast.makeText(requireActivity(), "Gagal logout", Toast.LENGTH_SHORT)
+                            Toast.makeText(
+                                requireActivity(),
+                                "Gagal logout",
+                                Toast.LENGTH_SHORT
+                            )
                                 .show()
                         }
                     }
@@ -151,7 +152,7 @@ class ProfileFragment : Fragment() {
 
     private fun changeEditable() {
         binding.apply {
-//            etName.isEnabled = isEditing
+//            etName.isEnabled = isEditing //belum ada api
             etEmail.isEnabled = isEditing
             etPassword.isEnabled = isEditing
             etNewPassword.isEnabled = isEditing
@@ -212,6 +213,4 @@ class ProfileFragment : Fragment() {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
     }
-
-
 }

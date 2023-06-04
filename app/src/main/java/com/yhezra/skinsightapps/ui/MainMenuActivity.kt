@@ -17,7 +17,7 @@ import com.yhezra.skinsightapps.databinding.ActivityMainMenuBinding
 class MainMenuActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainMenuBinding
-    lateinit var bottomNavController: NavController
+    private lateinit var bottomNavController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

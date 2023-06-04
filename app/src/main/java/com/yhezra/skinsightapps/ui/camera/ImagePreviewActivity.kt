@@ -1,7 +1,5 @@
 package com.yhezra.skinsightapps.ui.camera
 
-import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -11,11 +9,9 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.Toolbar
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.fragment.app.viewModels
 import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.databinding.ActivityImagePreviewBinding
 import com.yhezra.skinsightapps.ui.auth.AuthViewModel
@@ -76,7 +72,8 @@ class ImagePreviewActivity : AppCompatActivity() {
 
 
     private fun showPopUp(success: Boolean) {
-        if (success)
+        if (success) {
+            binding.progressBar.visibility = View.GONE
             AlertDialog.Builder(this).apply {
                 setTitle("Berhasil!")
                 setMessage("Update Profile Berhasil")
@@ -86,6 +83,7 @@ class ImagePreviewActivity : AppCompatActivity() {
                 create()
                 show()
             }
+        }
     }
 
     private fun getCondition() {
@@ -110,13 +108,13 @@ class ImagePreviewActivity : AppCompatActivity() {
 
     private fun uploadProfilePicture() {
         if (!uid.isNullOrEmpty())
-            profileViewModel.editProfilePicture(uid!!,imageFile = imageFile!!)
+            profileViewModel.editProfilePicture(uid!!, imageFile = imageFile!!)
     }
 
     private fun setPreviewImage() {
         val imagePath = intent.getStringExtra(IMAGE_PATH)
         val imageUri = Uri.parse(imagePath)
-        imageFile = File(imageUri.path)
+        imageFile = imageUri.path?.let { File(it) }
         binding.ivPreviewImage.setImageURI(imageUri)
 
     }

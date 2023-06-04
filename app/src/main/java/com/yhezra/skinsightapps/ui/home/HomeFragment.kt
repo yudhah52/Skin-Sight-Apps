@@ -22,8 +22,6 @@ import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.data.remote.model.article.ArticleItem
 import com.yhezra.skinsightapps.data.remote.model.auth.DataUser
 import com.yhezra.skinsightapps.databinding.FragmentHomeBinding
-import com.yhezra.skinsightapps.databinding.FragmentProfileBinding
-import com.yhezra.skinsightapps.ui.MainMenuActivity
 import com.yhezra.skinsightapps.ui.auth.AuthViewModel
 import com.yhezra.skinsightapps.ui.auth.AuthViewModelFactory
 import com.yhezra.skinsightapps.ui.auth.signup.SignUpActivity
@@ -48,7 +46,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -62,7 +60,7 @@ class HomeFragment : Fragment() {
                 navigateToSignup()
             } else {
                 Log.i("PROFILE", "SIUUUU GETDATA $uid")
-                profileViewModel.getDataUser(uid);
+                profileViewModel.getDataUser(uid)
             }
         }
         profileViewModel.dataUser.observe(requireActivity()) { dataUser ->

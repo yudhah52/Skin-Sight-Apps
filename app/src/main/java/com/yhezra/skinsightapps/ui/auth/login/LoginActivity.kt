@@ -11,12 +11,10 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityOptionsCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.google.android.material.snackbar.Snackbar
 import com.yhezra.skinsightapps.databinding.ActivityLoginBinding
 import com.yhezra.skinsightapps.ui.MainMenuActivity
 import com.yhezra.skinsightapps.ui.auth.AuthViewModel
@@ -90,8 +88,11 @@ class LoginActivity : AppCompatActivity() {
                             }
                             is Result.Error -> {
                                 binding.progressBar.visibility = View.GONE
-                                Snackbar.make(binding.root, "result.error", Snackbar.LENGTH_SHORT)
-                                    .show()
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Email atau password salah",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }
@@ -100,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
                 else -> {
                     Toast.makeText(
                         this@LoginActivity,
-                        "Invalid email or password",
+                        "Email atau password invalid",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
