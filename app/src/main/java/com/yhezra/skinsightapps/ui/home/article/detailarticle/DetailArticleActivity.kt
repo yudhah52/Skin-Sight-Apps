@@ -30,8 +30,6 @@ class DetailArticleActivity : AppCompatActivity(), View.OnClickListener {
         setToolbar()
 
         getData()
-
-
     }
 
     private fun getData() {

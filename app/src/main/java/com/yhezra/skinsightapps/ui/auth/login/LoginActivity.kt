@@ -43,6 +43,14 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
+        binding.btnTvReset.setOnClickListener {
+            val moveToResetPasswordActivity =
+                Intent(this@LoginActivity, ResetPasswordActivity::class.java)
+            startActivity(
+                moveToResetPasswordActivity,
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this@LoginActivity).toBundle()
+            )
+        }
         binding.btnTvSignup.setOnClickListener {
             val moveToSignUpActivity = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(
@@ -60,14 +68,13 @@ class LoginActivity : AppCompatActivity() {
                 password.isEmpty() -> {
                     binding.etPasswordLayout.error = "Masukkan password"
                 }
-                Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length>=8->{
+                Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
                     binding.apply {
                         etEmail.onEditorAction(EditorInfo.IME_ACTION_DONE)
                         etPassword.onEditorAction(EditorInfo.IME_ACTION_DONE)
                     }
-                    authViewModel.login(email,password).observe(this){
-                            result->
-                        when(result){
+                    authViewModel.login(email, password).observe(this) { result ->
+                        when (result) {
                             is Result.Loading -> {
                                 binding.progressBar.visibility = View.VISIBLE
                             }
@@ -83,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
                             }
                             is Result.Error -> {
                                 binding.progressBar.visibility = View.GONE
-                                Snackbar.make(binding.root, result.error, Snackbar.LENGTH_SHORT)
+                                Snackbar.make(binding.root, "result.error", Snackbar.LENGTH_SHORT)
                                     .show()
                             }
                         }
@@ -102,12 +109,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun playAnimation() {
-//        ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
-//            duration = 6000
-//            repeatCount = ObjectAnimator.INFINITE
-//            repeatMode = ObjectAnimator.REVERSE
-//        }.start()
-
         val logo =
             ObjectAnimator.ofFloat(binding.imgLogoHorizontal, View.ALPHA, 1f).setDuration(500)
         val title = ObjectAnimator.ofFloat(binding.tvTitle, View.ALPHA, 1f).setDuration(500)
@@ -116,18 +117,9 @@ class LoginActivity : AppCompatActivity() {
         val password = ObjectAnimator.ofFloat(binding.tvPassword, View.ALPHA, 1f).setDuration(500)
         val etPassword =
             ObjectAnimator.ofFloat(binding.etPasswordLayout, View.ALPHA, 1f).setDuration(500)
+        val reset = ObjectAnimator.ofFloat(binding.btnTvReset, View.ALPHA, 1f).setDuration(500)
         val signupNow = ObjectAnimator.ofFloat(binding.btnTvSignup, View.ALPHA, 1f).setDuration(500)
         val btnLogin = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(500)
-
-//        val tgtname = AnimatorSet().apply {
-//            playTogether(nameTextView, nameEditTextLayout)
-//        }
-//        val tgtemail = AnimatorSet().apply {
-//            playTogether(emailTextView, emailEditTextLayout)
-//        }
-//        val tgtpass = AnimatorSet().apply {
-//            playTogether(passwordTextView, passwordEditTextLayout)
-//        }
 
         AnimatorSet().apply {
             playTogether(
@@ -137,6 +129,7 @@ class LoginActivity : AppCompatActivity() {
                 etEmail,
                 password,
                 etPassword,
+                reset,
                 signupNow,
                 btnLogin
             )

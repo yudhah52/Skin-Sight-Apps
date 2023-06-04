@@ -18,6 +18,7 @@ class UserRepository private constructor(
     fun login(email: String, password: String): Flow<Result<String>> = flow {
         emit(Result.Loading)
         try {
+            Log.d("LOGIN","login: $userApiService")
             val response = userApiService.login(email, password)
             val token = response.data.uid
             userPreference.saveToken(token)
@@ -41,6 +42,20 @@ class UserRepository private constructor(
             emit(Result.Error(e.message.toString()))
         }
     }
+
+    fun reset(email: String): Flow<Result<String>> = flow {
+        emit(Result.Loading)
+        try {
+            val response = userApiService.reset(email)
+//            val token = response.data.uid
+//            userPreference.saveToken(token)
+            emit(Result.Success(response.message))
+        } catch (e: Exception) {
+            Log.d("UserRepository", "reset: ${e.message.toString()}")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
 
     fun logout(): Flow<Result<String>> = flow {
         emit(Result.Loading)

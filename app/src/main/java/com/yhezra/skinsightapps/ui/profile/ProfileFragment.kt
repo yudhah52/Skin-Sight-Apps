@@ -129,12 +129,12 @@ class ProfileFragment : Fragment() {
                 isEditing = true
                 changeEditable()
             }
-            btnCancel.setOnClickListener{
-                isEditing=false
+            btnCancel.setOnClickListener {
+                isEditing = false
                 changeEditable()
             }
-            imgPhoto.setOnClickListener{
-                if(isEditing){
+            imgPhoto.setOnClickListener {
+                if (isEditing) {
                     if (!allPermissionsGranted()) ActivityCompat.requestPermissions(
                         requireActivity(),
                         REQUIRED_PERMISSIONS,
@@ -151,20 +151,26 @@ class ProfileFragment : Fragment() {
 
     private fun changeEditable() {
         binding.apply {
-            etName.isEnabled = isEditing
+//            etName.isEnabled = isEditing
             etEmail.isEnabled = isEditing
+            etPassword.isEnabled = isEditing
+            etNewPassword.isEnabled = isEditing
             if (isEditing) {
+                tvNewPassword.visibility = View.VISIBLE
+                etNewPasswordLayout.visibility = View.VISIBLE
                 btnSaveChanges.visibility = View.VISIBLE
                 btnCancel.visibility = View.VISIBLE
                 btnIvEditProfile.visibility = View.GONE
-                imgPhoto.borderColor =ContextCompat.getColor(requireActivity(),R.color.light_green)
+                imgPhoto.borderColor =
+                    ContextCompat.getColor(requireActivity(), R.color.light_green)
                 imgPhoto.alpha = 0.7f
-            }
-            else {
+            } else {
+                tvNewPassword.visibility = View.INVISIBLE
+                etNewPasswordLayout.visibility = View.INVISIBLE
                 btnIvEditProfile.visibility = View.VISIBLE
                 btnSaveChanges.visibility = View.INVISIBLE
                 btnCancel.visibility = View.INVISIBLE
-                imgPhoto.borderColor =ContextCompat.getColor(requireActivity(),R.color.white)
+                imgPhoto.borderColor = ContextCompat.getColor(requireActivity(), R.color.white)
                 imgPhoto.alpha = 1f
             }
         }

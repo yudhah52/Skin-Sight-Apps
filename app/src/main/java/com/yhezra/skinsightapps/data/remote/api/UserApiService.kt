@@ -25,15 +25,21 @@ interface UserApiService {
         @Field("password") password: String
     ): AuthResponse
 
+    @FormUrlEncoded
+    @POST("reset-password")
+    suspend fun reset(
+        @Field("email") email: String
+    ): AuthResponse
+
     @GET("user/{uid}")
     fun getDataUser(
-        @Path("uid") uid:String
+        @Path("uid") uid: String
     ): Call<UserResponse>
 
     @Multipart
     @POST("user/{uid}/profile-picture")
     fun editProfilePicture(
-        @Path("uid") uid:String,
+        @Path("uid") uid: String,
         @Part file: MultipartBody.Part,
     ): Call<UserResponse>
 //

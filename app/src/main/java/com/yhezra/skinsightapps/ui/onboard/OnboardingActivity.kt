@@ -28,8 +28,6 @@ class OnboardingActivity : AppCompatActivity() {
         AuthViewModelFactory.getInstance(dataStore)
     }
 
-    private var isLogin = false
-
     private lateinit var binding: ActivityOnboardingBinding
     private lateinit var onboardListAdapter: OnboardListAdapter
 

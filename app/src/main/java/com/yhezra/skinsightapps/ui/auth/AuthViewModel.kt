@@ -12,5 +12,7 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
     fun register(email: String, password: String, name: String, phone: String) =
         userRepository.register(email, password, name, phone).asLiveData()
 
+    fun reset(email: String) = userRepository.reset(email).asLiveData()
+
     fun logout() = userRepository.logout().asLiveData()
 }
