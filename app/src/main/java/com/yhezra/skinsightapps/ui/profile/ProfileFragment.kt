@@ -6,12 +6,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -24,6 +27,8 @@ import com.yhezra.skinsightapps.ui.auth.AuthViewModel
 import com.yhezra.skinsightapps.ui.auth.AuthViewModelFactory
 import com.yhezra.skinsightapps.data.local.Result
 import com.yhezra.skinsightapps.data.remote.model.auth.DataUser
+import com.yhezra.skinsightapps.ui.MainMenuActivity
+import com.yhezra.skinsightapps.ui.auth.login.LoginActivity
 import com.yhezra.skinsightapps.ui.auth.signup.SignUpActivity
 import com.yhezra.skinsightapps.ui.camera.CameraActivity
 
@@ -35,6 +40,8 @@ class ProfileFragment : Fragment() {
         AuthViewModelFactory.getInstance(requireContext().dataStore)
     }
     private val profileViewModel: ProfileViewModel by viewModels()
+    private lateinit var dataUser: DataUser
+    private lateinit var uid: String
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -57,12 +64,13 @@ class ProfileFragment : Fragment() {
                 Log.i("PROFILE", "SIUUUU GA GET DATA")
                 navigateToSignup()
             } else {
+                this.uid = uid.toString()
                 Log.i("PROFILE", "SIUUUU GETDATA $uid")
                 profileViewModel.getDataUser(uid)
             }
         }
         profileViewModel.dataUser.observe(requireActivity()) { dataUser ->
-            setView(dataUser)
+            setDataUserView(dataUser)
         }
 
         profileViewModel.isLoading.observe(requireActivity()) {
@@ -72,7 +80,8 @@ class ProfileFragment : Fragment() {
         setupAction()
     }
 
-    private fun setView(dataUser: DataUser) {
+    private fun setDataUserView(dataUser: DataUser) {
+        this.dataUser = dataUser
         val defaultImg = "https://picsum.photos/200/300.jpg"
         val shownImgUrl = dataUser.imgUrl ?: defaultImg
         binding.apply {
@@ -145,7 +154,63 @@ class ProfileFragment : Fragment() {
                         startCameraX()
                     }
                 }
-//                    startCamera
+            }
+            btnSaveChanges.setOnClickListener {
+                val currentEmail = dataUser.email
+                val newEmail = binding.etEmail.text.toString()
+                val currentPassword = binding.etPassword.text.toString()
+                val newPassword = binding.etNewPassword.text.toString()
+                when {
+                    !Patterns.EMAIL_ADDRESS.matcher(newEmail).matches() -> {
+                        binding.etEmailLayout.error = "Email does not match the format"
+                    }
+                    currentPassword.isEmpty() -> {
+                        binding.etPasswordLayout.error = "Enter your current password"
+                    }
+                    newPassword.length <= 8 -> {
+                        binding.etNewPasswordLayout.error =
+                            "New Password must be more than 8 characters"
+                    }
+                    else -> {
+                        authViewModel.editEmailPassword(
+                            uid,
+                            currentEmail,
+                            newEmail,
+                            currentPassword,
+                            newPassword
+                        ).observe(requireActivity()) { result ->
+                            when (result) {
+                                is Result.Loading -> {
+                                    binding.progressBar.visibility = View.VISIBLE
+                                }
+                                is Result.Success -> {
+                                    isEditing = false
+                                    changeEditable()
+                                    binding.progressBar.visibility = View.GONE
+                                    AlertDialog.Builder(requireActivity()).apply {
+                                        setTitle("Success")
+                                        setMessage(result.data)
+                                        setPositiveButton("Next") { dialog, _ ->
+                                            dialog.cancel()
+                                        }
+                                        create()
+                                        show()
+                                    }
+                                }
+                                is Result.Error -> {
+                                    isEditing = false
+                                    changeEditable()
+                                    binding.progressBar.visibility = View.GONE
+                                    Toast.makeText(
+                                        requireActivity(),
+                                        getString(R.string.msg_failed_changes),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

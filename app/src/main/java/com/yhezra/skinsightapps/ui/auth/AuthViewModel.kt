@@ -15,4 +15,12 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
     fun reset(email: String) = userRepository.reset(email).asLiveData()
 
     fun logout() = userRepository.logout().asLiveData()
+
+    fun editEmailPassword(
+        token: String,
+        currentEmail: String,
+        newEmail: String,
+        currentPassword: String,
+        newPassword: String
+    ) = userRepository.editEmailPassword(token,currentEmail,newEmail,currentPassword,newPassword).asLiveData()
 }

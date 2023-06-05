@@ -42,6 +42,16 @@ interface UserApiService {
         @Path("uid") uid: String,
         @Part file: MultipartBody.Part,
     ): Call<UserResponse>
+
+    @FormUrlEncoded
+    @PUT("edit-email/{uid}")
+    suspend fun editEmailPassword(
+        @Path("uid") uid: String,
+        @Field("email") email: String,
+        @Field("password") password: String,
+        @Field("currentEmail") currentEmail: String,
+        @Field("currentPassword") currentPassword: String,
+    ): UserResponse
 //
 //    @GET("stories")
 //    suspend fun getAllStories(

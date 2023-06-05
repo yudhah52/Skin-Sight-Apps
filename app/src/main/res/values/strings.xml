@@ -49,7 +49,10 @@
   <string name="reset_password">Reset Password</string>
   <string name="reset">Reset</string>
   <string name="msg_success_reset">Link reset password telah di kirim ke email</string>
+  <string name="msg_success_changes">Berhasil edit email dan password</string>
+  <string name="msg_failed_changes">Gagal edit email dan password</string>
   <string name="forgot_password">Forgot Password?</string>
   <string name="new_password">New Password</string>
+  <string name="current_password">Current Password</string>
   <string name="title_article">Artikel Terkait</string>
 </resources>
