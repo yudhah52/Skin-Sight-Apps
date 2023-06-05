@@ -50,6 +50,14 @@ interface UserApiService {
         @Field("currentEmail") currentEmail: String,
         @Field("currentPassword") currentPassword: String,
     ): UserResponse
+
+    @FormUrlEncoded
+    @PUT("edit-name/{uid}")
+    suspend fun editName(
+        @Path("uid") uid: String,
+        @Field("name") name: String,
+        @Field("currentName") currentName: String,
+    ): UserResponse
 //
 //    @GET("stories")
 //    suspend fun getAllStories(

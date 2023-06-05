@@ -21,6 +21,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.databinding.FragmentProfileBinding
 import com.yhezra.skinsightapps.ui.auth.AuthViewModel
@@ -66,7 +67,9 @@ class ProfileFragment : Fragment() {
             } else {
                 this.uid = uid.toString()
                 Log.i("PROFILE", "SIUUUU GETDATA $uid")
-                getDataUser(uid)
+                Log.i("PROFILE","SIUUUU $isAdded")
+                if (isAdded)
+                    getDataUser(uid)
             }
         }
 
@@ -99,14 +102,16 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setDataUserView(dataUser: DataUser) {
-        this.dataUser = dataUser
+        Log.i("SETDATAUSER", "SIUUUU ${dataUser.imgUrl}")
         val defaultImg = "https://picsum.photos/200/300.jpg"
         val shownImgUrl = dataUser.imgUrl ?: defaultImg
         binding.apply {
             etName.setText(dataUser.name)
             etEmail.setText(dataUser.email)
-            Glide.with(binding.root)
+            Glide.with(requireActivity())
                 .load(shownImgUrl)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(binding.imgPhoto)
         }
     }
@@ -177,6 +182,8 @@ class ProfileFragment : Fragment() {
 
     private fun saveChanges() {
         val currentEmail = dataUser.email
+        val currentName = dataUser.name
+        val newName = binding.etName.text.toString()
         val newEmail = binding.etEmail.text.toString()
         val currentPassword = binding.etPassword.text.toString()
         val newPassword = binding.etNewPassword.text.toString()
@@ -184,59 +191,100 @@ class ProfileFragment : Fragment() {
             !Patterns.EMAIL_ADDRESS.matcher(newEmail).matches() -> {
                 binding.etEmailLayout.error = "Email does not match the format"
             }
-            currentPassword.isEmpty() -> {
+            currentPassword.isEmpty() && newPassword.isNotEmpty() -> {
                 binding.etPasswordLayout.error = "Enter your current password"
             }
-            newPassword.length <= 8 -> {
+            newName.isEmpty() -> {
+                binding.etName.error = "Enter your name"
+            }
+            newPassword.isNotEmpty() && newPassword.length <= 8 -> {
                 binding.etNewPasswordLayout.error =
                     "New Password must be more than 8 characters"
             }
             else -> {
-                authViewModel.editEmailPassword(
-                    uid,
-                    currentEmail,
-                    newEmail,
-                    currentPassword,
-                    newPassword
-                ).observe(requireActivity()) { result ->
-                    when (result) {
-                        is Result.Loading -> {
-                            binding.progressBar.visibility = View.VISIBLE
-                        }
-                        is Result.Success -> {
-                            isEditing = false
-                            changeEditable()
-                            binding.progressBar.visibility = View.GONE
-                            AlertDialog.Builder(requireActivity()).apply {
-                                setTitle("Success")
-                                setMessage(result.data)
-                                setPositiveButton("Next") { dialog, _ ->
-                                    dialog.cancel()
-                                    getDataUser(uid)
+                if (currentName != newEmail)
+                    authViewModel.editName(
+                        uid,
+                        newName,
+                        currentName
+                    ).observe(requireActivity()) { result ->
+                        when (result) {
+                            is Result.Loading -> {
+                                binding.progressBar.visibility = View.VISIBLE
+                            }
+                            is Result.Success -> {
+                                isEditing = false
+                                changeEditable()
+                                binding.progressBar.visibility = View.GONE
+                                AlertDialog.Builder(requireActivity()).apply {
+                                    setTitle("Success")
+                                    setMessage(result.data)
+                                    setPositiveButton("Next") { dialog, _ ->
+                                        dialog.cancel()
+                                        getDataUser(uid)
+                                    }
+                                    create()
+                                    show()
                                 }
-                                create()
-                                show()
+                            }
+                            is Result.Error -> {
+                                isEditing = false
+                                changeEditable()
+                                binding.progressBar.visibility = View.GONE
+                                Toast.makeText(
+                                    requireActivity(),
+                                    getString(R.string.msg_failed_changes_name),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
-                        is Result.Error -> {
-                            isEditing = false
-                            changeEditable()
-                            binding.progressBar.visibility = View.GONE
-                            Toast.makeText(
-                                requireActivity(),
-                                getString(R.string.msg_failed_changes),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                    }
+                if ((currentPassword.isNotEmpty() && newPassword.isNotEmpty()) || (currentEmail != newEmail))
+                    authViewModel.editEmailPassword(
+                        uid,
+                        currentEmail,
+                        newEmail,
+                        currentPassword,
+                        newPassword
+                    ).observe(requireActivity()) { result ->
+                        when (result) {
+                            is Result.Loading -> {
+                                binding.progressBar.visibility = View.VISIBLE
+                            }
+                            is Result.Success -> {
+                                isEditing = false
+                                changeEditable()
+                                binding.progressBar.visibility = View.GONE
+                                AlertDialog.Builder(requireActivity()).apply {
+                                    setTitle("Success")
+                                    setMessage(result.data)
+                                    setPositiveButton("Next") { dialog, _ ->
+                                        dialog.cancel()
+                                        getDataUser(uid)
+                                    }
+                                    create()
+                                    show()
+                                }
+                            }
+                            is Result.Error -> {
+                                isEditing = false
+                                changeEditable()
+                                binding.progressBar.visibility = View.GONE
+                                Toast.makeText(
+                                    requireActivity(),
+                                    getString(R.string.msg_failed_changes),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
                     }
-                }
             }
         }
     }
 
     private fun changeEditable() {
         binding.apply {
-//            etName.isEnabled = isEditing //belum ada api
+            etName.isEnabled = isEditing
             etEmail.isEnabled = isEditing
             etPassword.isEnabled = isEditing
             etNewPassword.isEnabled = isEditing

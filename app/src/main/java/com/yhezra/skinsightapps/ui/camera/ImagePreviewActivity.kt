@@ -92,6 +92,7 @@ class ImagePreviewActivity : AppCompatActivity() {
                     binding.progressBar.visibility = View.VISIBLE
                 }
                 is Result.Success -> {
+                    Log.i("IMAGEPREVIEW","SIUUUU BERHASIL ${result.data}")
                     binding.progressBar.visibility = View.GONE
                     AlertDialog.Builder(this).apply {
                         setTitle("Success!")

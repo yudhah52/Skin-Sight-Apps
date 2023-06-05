@@ -76,12 +76,12 @@ class UserRepository private constructor(
 
     fun getDataUser(
         token: String
-    ) : Flow<Result<DataUser>> = flow{
+    ): Flow<Result<DataUser>> = flow {
         emit(Result.Loading)
-        try{
+        try {
             val response = userApiService.getDataUser(token)
             emit(Result.Success(response.data!!))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             Log.d("UserRepository", "getDataUser: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
@@ -103,6 +103,26 @@ class UserRepository private constructor(
                 password = newPassword,
                 currentEmail = currentEmail,
                 currentPassword = currentPassword
+            )
+            emit(Result.Success(response.message!!))
+
+        } catch (e: Exception) {
+            Log.d("UserRepository", "editEmailPassword: ${e.message.toString()}")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun editName(
+        uid: String,
+        newName: String,
+        currentName: String,
+    ): Flow<Result<String>> = flow {
+        emit(Result.Loading)
+        try {
+            val response = userApiService.editName(
+                uid = uid,
+                name = newName,
+                currentName = currentName
             )
             emit(Result.Success(response.message!!))
 

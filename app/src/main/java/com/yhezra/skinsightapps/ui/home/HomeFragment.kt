@@ -17,6 +17,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.data.local.Result
@@ -120,8 +121,10 @@ class HomeFragment : Fragment() {
         binding.apply {
             val greet = getString(R.string.greet, dataUser.name)
             tvGreet.text = greet
-            Glide.with(binding.root)
+            Glide.with(requireActivity())
                 .load(shownImgUrl)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(binding.imgPhoto)
         }
     }

@@ -27,6 +27,12 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
         newPassword: String
     ) = userRepository.editEmailPassword(token,currentEmail,newEmail,currentPassword,newPassword).asLiveData()
 
+    fun editName(
+        token: String,
+        newName: String,
+        currentName: String,
+    ) = userRepository.editName(token,newName,currentName).asLiveData()
+
     fun editProfilePicture(
         uid: String, imageFile: File
     ) = userRepository.editProfilePicture(uid,imageFile).asLiveData()
