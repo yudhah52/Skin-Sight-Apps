@@ -3,6 +3,7 @@ package com.yhezra.skinsightapps.ui.auth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.yhezra.skinsightapps.data.remote.repository.UserRepository
+import java.io.File
 
 class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
     fun isLogin() = userRepository.isLogin().asLiveData()
@@ -25,4 +26,8 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
         currentPassword: String,
         newPassword: String
     ) = userRepository.editEmailPassword(token,currentEmail,newEmail,currentPassword,newPassword).asLiveData()
+
+    fun editProfilePicture(
+        uid: String, imageFile: File
+    ) = userRepository.editProfilePicture(uid,imageFile).asLiveData()
 }

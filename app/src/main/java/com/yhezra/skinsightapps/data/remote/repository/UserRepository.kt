@@ -7,7 +7,12 @@ import com.yhezra.skinsightapps.data.local.Result
 import com.yhezra.skinsightapps.data.local.preference.UserPreference
 import com.yhezra.skinsightapps.data.remote.api.UserApiService
 import com.yhezra.skinsightapps.data.remote.model.auth.DataUser
+import com.yhezra.skinsightapps.data.remote.utils.reduceFileImage
 import kotlinx.coroutines.flow.emitAll
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 class UserRepository private constructor(
     private val userApiService: UserApiService,
@@ -98,6 +103,26 @@ class UserRepository private constructor(
                 password = newPassword,
                 currentEmail = currentEmail,
                 currentPassword = currentPassword
+            )
+            emit(Result.Success(response.message!!))
+
+        } catch (e: Exception) {
+            Log.d("UserRepository", "editEmailPassword: ${e.message.toString()}")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun editProfilePicture(
+        uid: String, imageFile: File
+    ): Flow<Result<String>> = flow {
+        emit(Result.Loading)
+        try {
+            val reducedFile = reduceFileImage(imageFile)
+            val requestImageFile = reducedFile.asRequestBody("image/jpeg".toMediaType())
+            val imageMultipart: MultipartBody.Part =
+                MultipartBody.Part.createFormData("file", imageFile.name, requestImageFile)
+            val response = userApiService.editProfilePicture(
+                uid, imageMultipart
             )
             emit(Result.Success(response.message!!))
 

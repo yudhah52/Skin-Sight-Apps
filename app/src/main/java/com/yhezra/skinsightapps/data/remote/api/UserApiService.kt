@@ -3,9 +3,7 @@ package com.yhezra.skinsightapps.data.remote.api
 import com.yhezra.skinsightapps.data.remote.model.auth.AuthResponse
 import com.yhezra.skinsightapps.data.remote.model.auth.UserResponse
 import okhttp3.MultipartBody
-import retrofit2.Call
 import retrofit2.http.*
-import java.io.File
 
 interface UserApiService {
 
@@ -38,10 +36,10 @@ interface UserApiService {
 
     @Multipart
     @POST("user/{uid}/profile-picture")
-    fun editProfilePicture(
+    suspend fun editProfilePicture(
         @Path("uid") uid: String,
         @Part file: MultipartBody.Part,
-    ): Call<UserResponse>
+    ): UserResponse
 
     @FormUrlEncoded
     @PUT("edit-email/{uid}")

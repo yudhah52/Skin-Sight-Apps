@@ -7,17 +7,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.yhezra.skinsightapps.R
+import com.yhezra.skinsightapps.data.local.Result
 import com.yhezra.skinsightapps.databinding.ActivityImagePreviewBinding
 import com.yhezra.skinsightapps.ui.auth.AuthViewModel
 import com.yhezra.skinsightapps.ui.auth.AuthViewModelFactory
 import com.yhezra.skinsightapps.ui.detection.DetectionResultActivity
-import com.yhezra.skinsightapps.ui.profile.ProfileViewModel
 import java.io.File
 
 class ImagePreviewActivity : AppCompatActivity() {
@@ -30,7 +31,6 @@ class ImagePreviewActivity : AppCompatActivity() {
     private var imageFile: File? = null
 
     private lateinit var binding: ActivityImagePreviewBinding
-    private val profileViewModel: ProfileViewModel by viewModels()
 
     private val authViewModel: AuthViewModel by viewModels {
         AuthViewModelFactory.getInstance(dataStore)
@@ -40,14 +40,6 @@ class ImagePreviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityImagePreviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        profileViewModel.isLoading.observe(this) {
-            showLoading(it)
-        }
-
-        profileViewModel.isSuccess.observe(this) { isSuccess ->
-            showPopUp(isSuccess)
-        }
 
         authViewModel.isLogin().observe(this) { uid ->
             if (!uid.isNullOrEmpty()) {
@@ -60,30 +52,6 @@ class ImagePreviewActivity : AppCompatActivity() {
         setToolBar()
         setPreviewImage()
         setAction()
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
-    }
-
-
-    private fun showPopUp(success: Boolean) {
-        if (success) {
-            binding.progressBar.visibility = View.GONE
-            AlertDialog.Builder(this).apply {
-                setTitle("Berhasil!")
-                setMessage("Update Profile Berhasil")
-                setPositiveButton("Lanjut") { _, _ ->
-                    finish()
-                }
-                create()
-                show()
-            }
-        }
     }
 
     private fun getCondition() {
@@ -108,7 +76,44 @@ class ImagePreviewActivity : AppCompatActivity() {
 
     private fun uploadProfilePicture() {
         if (!uid.isNullOrEmpty())
-            profileViewModel.editProfilePicture(uid!!, imageFile = imageFile!!)
+            editProfilePicture(uid!!, imageFile!!)
+        else
+            Toast.makeText(
+                this,
+                "Failed to obtain user authentication",
+                Toast.LENGTH_SHORT
+            ).show()
+    }
+
+    private fun editProfilePicture(uid: String, imageFile: File) {
+        authViewModel.editProfilePicture(uid, imageFile).observe(this) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    AlertDialog.Builder(this).apply {
+                        setTitle("Success!")
+                        setMessage(result.data)
+                        setPositiveButton("Lanjut") { _, _ ->
+                            finish()
+                        }
+                        create()
+                        show()
+                    }
+                }
+                is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(
+                        this,
+                        "Failed to update profile picture",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+            }
+        }
     }
 
     private fun setPreviewImage() {

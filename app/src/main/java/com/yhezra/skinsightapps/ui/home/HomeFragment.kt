@@ -29,7 +29,6 @@ import com.yhezra.skinsightapps.ui.auth.signup.SignUpActivity
 import com.yhezra.skinsightapps.ui.home.article.detailarticle.DetailArticleActivity
 import com.yhezra.skinsightapps.ui.home.article.adapter.ListArticleAdapter
 import com.yhezra.skinsightapps.ui.home.article.ArticleViewModel
-import com.yhezra.skinsightapps.ui.profile.ProfileViewModel
 
 class HomeFragment : Fragment() {
 
