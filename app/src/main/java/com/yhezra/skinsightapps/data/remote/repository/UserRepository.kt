@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.flow
 import com.yhezra.skinsightapps.data.local.Result
 import com.yhezra.skinsightapps.data.local.preference.UserPreference
 import com.yhezra.skinsightapps.data.remote.api.UserApiService
+import com.yhezra.skinsightapps.data.remote.model.auth.DataUser
 import kotlinx.coroutines.flow.emitAll
 
 class UserRepository private constructor(
@@ -66,6 +67,20 @@ class UserRepository private constructor(
         emit(Result.Loading)
         userPreference.logout()
         emit(Result.Success("success"))
+    }
+
+    fun getDataUser(
+        token: String
+    ) : Flow<Result<DataUser>> = flow{
+        emit(Result.Loading)
+        try{
+            val response = userApiService.getDataUser(token)
+            emit(Result.Success(response.data!!))
+        }catch (e:Exception){
+            Log.d("UserRepository", "getDataUser: ${e.message.toString()}")
+            emit(Result.Error(e.message.toString()))
+        }
+
     }
 
     fun editEmailPassword(

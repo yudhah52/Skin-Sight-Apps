@@ -26,39 +26,6 @@ class ProfileViewModel : ViewModel() {
     private val _isSuccess = MutableLiveData<Boolean>()
     val isSuccess: LiveData<Boolean> = _isSuccess
 
-    fun getDataUser(token: String) {
-        Log.i("siuuu", "suiiii $token")
-
-        _isLoading.value = true
-        val client = ApiConfig.getUserApiService().getDataUser(uid = token)
-        client.enqueue(object : Callback<UserResponse> {
-            override fun onResponse(
-                call: Call<UserResponse>,
-                response: Response<UserResponse>
-            ) {
-                if (response.isSuccessful) {
-
-                    val responseBody = response.body()
-                    Log.i("siuuu", "suiiii ${responseBody?.data} ${dataUser.value?.name}")
-                    if (responseBody != null) {
-                        _dataUser.value = responseBody.data!!
-//                        val newArticleList =
-//                            _listArticle.value?.plus(responseBody.data) ?: responseBody.data
-//                        _listArticle.postValue(newArticleList)
-                    }
-                } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
-                }
-                _isLoading.value = false
-            }
-
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                _isLoading.value = false
-                Log.e(TAG, "onFailure: ${t.message}")
-            }
-        })
-    }
-
     fun editProfilePicture(uid: String, imageFile: File) {
         _isLoading.value = true
         val reducedFile = reduceFileImage(imageFile)

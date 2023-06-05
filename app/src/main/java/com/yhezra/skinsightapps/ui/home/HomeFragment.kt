@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.yhezra.skinsightapps.R
+import com.yhezra.skinsightapps.data.local.Result
 import com.yhezra.skinsightapps.data.remote.model.article.ArticleItem
 import com.yhezra.skinsightapps.data.remote.model.auth.DataUser
 import com.yhezra.skinsightapps.databinding.FragmentHomeBinding
@@ -37,11 +38,11 @@ class HomeFragment : Fragment() {
     private val articleViewModel: ArticleViewModel by viewModels()
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
+    private lateinit var dataUser: DataUser
 
     private val authViewModel: AuthViewModel by viewModels {
         AuthViewModelFactory.getInstance(requireContext().dataStore)
     }
-    private val profileViewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,11 +61,8 @@ class HomeFragment : Fragment() {
                 navigateToSignup()
             } else {
                 Log.i("PROFILE", "SIUUUU GETDATA $uid")
-                profileViewModel.getDataUser(uid)
+                getDataUser(uid)
             }
-        }
-        profileViewModel.dataUser.observe(requireActivity()) { dataUser ->
-            setView(dataUser)
         }
 
         articleViewModel.getListArticle()
@@ -76,6 +74,31 @@ class HomeFragment : Fragment() {
         }
 
         setupAction()
+    }
+
+    private fun getDataUser(uid: String) {
+        authViewModel.getDataUser(uid).observe(requireActivity()) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    dataUser = result.data
+                    setDataUserView(dataUser)
+                }
+                is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(
+                        requireActivity(),
+                        "Failed to load user data",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            }
+        }
+
     }
 
     private fun setupAction() {
@@ -92,7 +115,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setView(dataUser: DataUser) {
+    private fun setDataUserView(dataUser: DataUser) {
         val defaultImg = "https://picsum.photos/200/300.jpg"
         val shownImgUrl = dataUser.imgUrl ?: defaultImg
         binding.apply {

@@ -39,14 +39,14 @@ class ProfileFragment : Fragment() {
     private val authViewModel: AuthViewModel by viewModels {
         AuthViewModelFactory.getInstance(requireContext().dataStore)
     }
-    private val profileViewModel: ProfileViewModel by viewModels()
-    private lateinit var dataUser: DataUser
+
     private lateinit var uid: String
+    private lateinit var dataUser: DataUser
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-
     private var isEditing = false
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,18 +66,36 @@ class ProfileFragment : Fragment() {
             } else {
                 this.uid = uid.toString()
                 Log.i("PROFILE", "SIUUUU GETDATA $uid")
-                profileViewModel.getDataUser(uid)
+                getDataUser(uid)
             }
-        }
-        profileViewModel.dataUser.observe(requireActivity()) { dataUser ->
-            setDataUserView(dataUser)
-        }
-
-        profileViewModel.isLoading.observe(requireActivity()) {
-            showLoading(it)
         }
 
         setupAction()
+    }
+
+    private fun getDataUser(uid: String) {
+        authViewModel.getDataUser(uid).observe(requireActivity()) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    dataUser = result.data
+                    setDataUserView(dataUser)
+                }
+                is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(
+                        requireActivity(),
+                        "Failed to load user data",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            }
+        }
+
     }
 
     private fun setDataUserView(dataUser: DataUser) {
@@ -103,37 +121,11 @@ class ProfileFragment : Fragment() {
         activity?.finish()
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
-    }
-
 
     private fun setupAction() {
         binding.apply {
             btnLogout.setOnClickListener {
-                authViewModel.logout().observe(requireActivity()) { result ->
-                    when (result) {
-                        is Result.Loading -> {
-                            binding.progressBar.visibility = View.VISIBLE
-                        }
-                        is Result.Success -> {
-                            binding.progressBar.visibility = View.GONE
-                        }
-                        is Result.Error -> {
-                            binding.progressBar.visibility = View.GONE
-                            Toast.makeText(
-                                requireActivity(),
-                                "Gagal logout",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                        }
-                    }
-                }
+                logout()
             }
             btnIvEditProfile.setOnClickListener {
                 isEditing = true
@@ -156,58 +148,85 @@ class ProfileFragment : Fragment() {
                 }
             }
             btnSaveChanges.setOnClickListener {
-                val currentEmail = dataUser.email
-                val newEmail = binding.etEmail.text.toString()
-                val currentPassword = binding.etPassword.text.toString()
-                val newPassword = binding.etNewPassword.text.toString()
-                when {
-                    !Patterns.EMAIL_ADDRESS.matcher(newEmail).matches() -> {
-                        binding.etEmailLayout.error = "Email does not match the format"
-                    }
-                    currentPassword.isEmpty() -> {
-                        binding.etPasswordLayout.error = "Enter your current password"
-                    }
-                    newPassword.length <= 8 -> {
-                        binding.etNewPasswordLayout.error =
-                            "New Password must be more than 8 characters"
-                    }
-                    else -> {
-                        authViewModel.editEmailPassword(
-                            uid,
-                            currentEmail,
-                            newEmail,
-                            currentPassword,
-                            newPassword
-                        ).observe(requireActivity()) { result ->
-                            when (result) {
-                                is Result.Loading -> {
-                                    binding.progressBar.visibility = View.VISIBLE
+                saveChanges()
+            }
+        }
+    }
+
+    private fun logout() {
+        authViewModel.logout().observe(requireActivity()) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                }
+                is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(
+                        requireActivity(),
+                        "Gagal logout",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            }
+        }
+    }
+
+    private fun saveChanges() {
+        val currentEmail = dataUser.email
+        val newEmail = binding.etEmail.text.toString()
+        val currentPassword = binding.etPassword.text.toString()
+        val newPassword = binding.etNewPassword.text.toString()
+        when {
+            !Patterns.EMAIL_ADDRESS.matcher(newEmail).matches() -> {
+                binding.etEmailLayout.error = "Email does not match the format"
+            }
+            currentPassword.isEmpty() -> {
+                binding.etPasswordLayout.error = "Enter your current password"
+            }
+            newPassword.length <= 8 -> {
+                binding.etNewPasswordLayout.error =
+                    "New Password must be more than 8 characters"
+            }
+            else -> {
+                authViewModel.editEmailPassword(
+                    uid,
+                    currentEmail,
+                    newEmail,
+                    currentPassword,
+                    newPassword
+                ).observe(requireActivity()) { result ->
+                    when (result) {
+                        is Result.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
+                        is Result.Success -> {
+                            isEditing = false
+                            changeEditable()
+                            binding.progressBar.visibility = View.GONE
+                            AlertDialog.Builder(requireActivity()).apply {
+                                setTitle("Success")
+                                setMessage(result.data)
+                                setPositiveButton("Next") { dialog, _ ->
+                                    dialog.cancel()
+                                    getDataUser(uid)
                                 }
-                                is Result.Success -> {
-                                    isEditing = false
-                                    changeEditable()
-                                    binding.progressBar.visibility = View.GONE
-                                    AlertDialog.Builder(requireActivity()).apply {
-                                        setTitle("Success")
-                                        setMessage(result.data)
-                                        setPositiveButton("Next") { dialog, _ ->
-                                            dialog.cancel()
-                                        }
-                                        create()
-                                        show()
-                                    }
-                                }
-                                is Result.Error -> {
-                                    isEditing = false
-                                    changeEditable()
-                                    binding.progressBar.visibility = View.GONE
-                                    Toast.makeText(
-                                        requireActivity(),
-                                        getString(R.string.msg_failed_changes),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
+                                create()
+                                show()
                             }
+                        }
+                        is Result.Error -> {
+                            isEditing = false
+                            changeEditable()
+                            binding.progressBar.visibility = View.GONE
+                            Toast.makeText(
+                                requireActivity(),
+                                getString(R.string.msg_failed_changes),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }

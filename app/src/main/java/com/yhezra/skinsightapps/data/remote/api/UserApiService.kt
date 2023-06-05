@@ -32,9 +32,9 @@ interface UserApiService {
     ): AuthResponse
 
     @GET("user/{uid}")
-    fun getDataUser(
+    suspend fun getDataUser(
         @Path("uid") uid: String
-    ): Call<UserResponse>
+    ): UserResponse
 
     @Multipart
     @POST("user/{uid}/profile-picture")
