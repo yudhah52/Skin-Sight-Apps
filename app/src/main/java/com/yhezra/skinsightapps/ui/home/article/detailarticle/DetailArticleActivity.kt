@@ -1,22 +1,32 @@
 package com.yhezra.skinsightapps.ui.home.article.detailarticle
 
+import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.text.HtmlCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.bumptech.glide.Glide
 import com.yhezra.skinsightapps.R
+import com.yhezra.skinsightapps.data.local.Result
 import com.yhezra.skinsightapps.data.remote.model.detailarticle.DataDetailArticle
 import com.yhezra.skinsightapps.databinding.ActivityDetailArticleBinding
+import com.yhezra.skinsightapps.ui.home.ArticleViewModelFactory
 import com.yhezra.skinsightapps.ui.home.article.ArticleViewModel
 
 class DetailArticleActivity : AppCompatActivity(), View.OnClickListener {
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
 
     private lateinit var binding: ActivityDetailArticleBinding
-    private val articleViewModel: ArticleViewModel by viewModels()
+    private val articleViewModel: ArticleViewModel by viewModels{
+        ArticleViewModelFactory.getInstance(this,dataStore)
+    }
 
     private var id: String? = null
     private var detailArticle: DataDetailArticle? = null
@@ -34,14 +44,26 @@ class DetailArticleActivity : AppCompatActivity(), View.OnClickListener {
     private fun getData() {
         id = intent.getStringExtra(ID_ARTICLE)
 
-        articleViewModel.getDetailArticle(id = id!!)
-
-        articleViewModel.detailArticle.observe(this) { detailArticle ->
-            setDataArticle(detailArticle)
-        }
-
-        articleViewModel.isLoading.observe(this) {
-            showLoading(it)
+        articleViewModel.getDetailArticle(id = id!!).observe(this) { result ->
+            when(result){
+                is Result.Loading ->{
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    detailArticle = result.data
+                    setDataArticle(detailArticle!!)
+                }
+                is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(
+                        this,
+                        "Failed to load article",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            }
         }
     }
 
@@ -64,17 +86,6 @@ class DetailArticleActivity : AppCompatActivity(), View.OnClickListener {
                 tvDescArticle.text =
                     HtmlCompat.fromHtml(detailArticle.content, HtmlCompat.FROM_HTML_MODE_LEGACY)
             }
-
-//            tvDescArticle.text = detailArticle.content
-
-        }
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
         }
     }
 

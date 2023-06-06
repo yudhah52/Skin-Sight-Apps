@@ -1,10 +1,12 @@
 package com.yhezra.skinsightapps.data.di
 
+import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.yhezra.skinsightapps.data.local.preference.UserPreference
 import com.yhezra.skinsightapps.data.remote.repository.UserRepository
 import com.yhezra.skinsightapps.data.remote.api.ApiConfig
+import com.yhezra.skinsightapps.data.remote.repository.ArticleRepository
 
 object Injection {
 
@@ -14,13 +16,11 @@ object Injection {
         return UserRepository.getInstance(userApiService, authPreferences)
     }
 
-//    fun provideStoryRepository(
-//        context: Context,
-//        dataStore: DataStore<Preferences>
-//    ): StoryRepository {
-//        val apiService = ApiConfig.getUserApiService()
-//        val userPreference = UserPreference.getInstance(dataStore)
-//        val database = StoryDatabase.getInstance(context)
-//        return StoryRepository.getInstance(apiService, userPreference, database)
-//    }
+    fun provideArticleRepository(
+        context: Context,
+        dataStore: DataStore<Preferences>
+    ): ArticleRepository {
+        val apiService = ApiConfig.getArticleApiService()
+        return ArticleRepository.getInstance(apiService)
+    }
 }

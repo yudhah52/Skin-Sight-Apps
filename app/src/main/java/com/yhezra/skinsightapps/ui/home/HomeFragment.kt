@@ -32,12 +32,14 @@ import com.yhezra.skinsightapps.ui.home.article.adapter.ListArticleAdapter
 import com.yhezra.skinsightapps.ui.home.article.ArticleViewModel
 
 class HomeFragment : Fragment() {
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val articleViewModel: ArticleViewModel by viewModels()
+    private val articleViewModel: ArticleViewModel by viewModels{
+        ArticleViewModelFactory.getInstance(requireContext(),requireContext().dataStore)
+    }
 
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
     private lateinit var dataUser: DataUser
 
     private val authViewModel: AuthViewModel by viewModels {
@@ -65,12 +67,26 @@ class HomeFragment : Fragment() {
             }
         }
 
-        articleViewModel.getListArticle()
-        articleViewModel.listArticle.observe(viewLifecycleOwner) { listArticle ->
-            setArticleData(listArticle)
-        }
-        articleViewModel.isLoading.observe(viewLifecycleOwner) {
-            showLoading(it)
+        articleViewModel.getListArticle().observe(requireActivity()){result->
+            when(result){
+                is Result.Loading ->{
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    val listArticle = result.data
+                    setArticleData(listArticle)
+                }
+                is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(
+                        requireActivity(),
+                        "Failed to load article",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            }
         }
 
         setupAction()
@@ -147,16 +163,6 @@ class HomeFragment : Fragment() {
             binding.rvArticle.addItemDecoration(itemDecoration)
         }
 
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.apply {
-            if (isLoading) {
-                progressBar.visibility = View.VISIBLE
-            } else {
-                progressBar.visibility = View.GONE
-            }
-        }
     }
 
     private fun navigateToDetailArticle(article: ArticleItem) {
