@@ -95,7 +95,7 @@
         android:gravity="center"
         android:text="@string/try_text"
         android:textColor="@color/black"
-        android:textSize="10sp"
+        android:textSize="11sp"
         app:layout_constraintBottom_toTopOf="@id/btn_try"
         app:layout_constraintStart_toStartOf="@id/iv_home"
         app:layout_constraintTop_toTopOf="@id/iv_home"

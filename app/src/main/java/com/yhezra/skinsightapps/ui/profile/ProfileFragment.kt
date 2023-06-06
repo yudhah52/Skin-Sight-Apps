@@ -1,6 +1,8 @@
 package com.yhezra.skinsightapps.ui.profile
 
 import android.Manifest
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,6 +13,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -22,6 +26,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.textfield.TextInputLayout
 import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.databinding.FragmentProfileBinding
 import com.yhezra.skinsightapps.ui.auth.AuthViewModel
@@ -60,6 +65,8 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.etPasswordLayout.endIconMode = TextInputLayout.END_ICON_NONE
+
         authViewModel.isLogin().observe(requireActivity()) { uid ->
             if (uid.isNullOrEmpty()) {
                 Log.i("PROFILE", "SIUUUU GA GET DATA")
@@ -67,7 +74,7 @@ class ProfileFragment : Fragment() {
             } else {
                 this.uid = uid.toString()
                 Log.i("PROFILE", "SIUUUU GETDATA $uid")
-                Log.i("PROFILE","SIUUUU $isAdded")
+                Log.i("PROFILE", "SIUUUU $isAdded")
                 if (isAdded)
                     getDataUser(uid)
             }
@@ -191,18 +198,18 @@ class ProfileFragment : Fragment() {
             !Patterns.EMAIL_ADDRESS.matcher(newEmail).matches() -> {
                 binding.etEmailLayout.error = "Email does not match the format"
             }
-            currentPassword.isEmpty() && newPassword.isNotEmpty() -> {
-                binding.etPasswordLayout.error = "Enter your current password"
-            }
             newName.isEmpty() -> {
                 binding.etName.error = "Enter your name"
+            }
+            currentPassword.isEmpty() && newPassword.isNotEmpty() -> {
+                binding.etPasswordLayout.error = "Enter your current password"
             }
             newPassword.isNotEmpty() && newPassword.length <= 8 -> {
                 binding.etNewPasswordLayout.error =
                     "New Password must be more than 8 characters"
             }
             else -> {
-                if (currentName != newEmail)
+                if (currentName != newName)
                     authViewModel.editName(
                         uid,
                         newName,
@@ -226,6 +233,7 @@ class ProfileFragment : Fragment() {
                                     create()
                                     show()
                                 }
+                                Log.i("Output Name", result.data)
                             }
                             is Result.Error -> {
                                 isEditing = false
@@ -236,6 +244,7 @@ class ProfileFragment : Fragment() {
                                     getString(R.string.msg_failed_changes_name),
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                Log.i("Name", result.error)
                             }
                         }
                     }
@@ -265,6 +274,7 @@ class ProfileFragment : Fragment() {
                                     create()
                                     show()
                                 }
+                                Log.i("Output Email", result.data)
                             }
                             is Result.Error -> {
                                 isEditing = false
@@ -275,6 +285,8 @@ class ProfileFragment : Fragment() {
                                     getString(R.string.msg_failed_changes),
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                setDataUserView(dataUser)
+                                Log.i("Email", result.error)
                             }
                         }
                     }
@@ -288,24 +300,51 @@ class ProfileFragment : Fragment() {
             etEmail.isEnabled = isEditing
             etPassword.isEnabled = isEditing
             etNewPassword.isEnabled = isEditing
+            etEmailLayout.error = null
+            etNameLayout.error = null
+            etPasswordLayout.error = null
+            etNewPasswordLayout.error = null
+            etPassword.setText("")
+            etNewPassword.setText("")
             if (isEditing) {
-                tvNewPassword.visibility = View.VISIBLE
-                etNewPasswordLayout.visibility = View.VISIBLE
-                btnSaveChanges.visibility = View.VISIBLE
-                btnCancel.visibility = View.VISIBLE
-                btnIvEditProfile.visibility = View.GONE
+                animateViewVisibility(btnIvEditProfile, View.GONE)
+                imgPhoto.alpha = 0.7f
                 imgPhoto.borderColor =
                     ContextCompat.getColor(requireActivity(), R.color.light_green)
-                imgPhoto.alpha = 0.7f
+                animateViewVisibility(btnLogout, View.GONE)
+                animateViewVisibility(tvNewPassword, View.VISIBLE)
+                animateViewVisibility(etNewPasswordLayout, View.VISIBLE)
+                animateViewVisibility(btnSaveChanges, View.VISIBLE)
+                animateViewVisibility(btnCancel, View.VISIBLE)
+                binding.etPasswordLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+                binding.etNewPasswordLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
             } else {
-                tvNewPassword.visibility = View.INVISIBLE
-                etNewPasswordLayout.visibility = View.INVISIBLE
-                btnIvEditProfile.visibility = View.VISIBLE
-                btnSaveChanges.visibility = View.INVISIBLE
-                btnCancel.visibility = View.INVISIBLE
-                imgPhoto.borderColor = ContextCompat.getColor(requireActivity(), R.color.white)
+                animateViewVisibility(btnIvEditProfile, View.VISIBLE)
                 imgPhoto.alpha = 1f
+                imgPhoto.borderColor = ContextCompat.getColor(requireActivity(), R.color.white)
+                animateViewVisibility(btnLogout, View.VISIBLE)
+                animateViewVisibility(tvNewPassword, View.INVISIBLE)
+                animateViewVisibility(etNewPasswordLayout, View.INVISIBLE)
+                animateViewVisibility(btnSaveChanges, View.INVISIBLE)
+                animateViewVisibility(btnCancel, View.INVISIBLE)
+                binding.etPasswordLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                binding.etNewPasswordLayout.endIconMode = TextInputLayout.END_ICON_NONE
             }
+        }
+    }
+
+    private fun animateViewVisibility(view: View, visibility: Int) {
+        if (view.visibility == visibility) return // No need to animate if already in desired visibility
+
+        val animation: Animation = if (visibility == View.VISIBLE) {
+            AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
+        } else {
+            AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
+        }
+
+        view.apply {
+            startAnimation(animation)
+            this.visibility = visibility
         }
     }
 
@@ -332,7 +371,6 @@ class ProfileFragment : Fragment() {
             }
         }
     }
-
 
     private fun startCameraX() {
         val intent = Intent(requireActivity(), CameraActivity::class.java)
