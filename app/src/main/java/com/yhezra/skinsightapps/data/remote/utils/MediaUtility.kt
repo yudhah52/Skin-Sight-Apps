@@ -31,8 +31,9 @@ fun createFile(application: Application): File {
     }
 
     val outputDirectory = if (mediaDir != null && mediaDir.exists()) mediaDir else application.filesDir
-
-    return File(outputDirectory, "$timeStamp.jpg")
+    val time = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+    Log.i("NAMA FILE", "$time.jpg")
+    return File(outputDirectory, "$time.jpg")
 }
 
 fun rotateFile(file: File, isBackCamera: Boolean = false) {

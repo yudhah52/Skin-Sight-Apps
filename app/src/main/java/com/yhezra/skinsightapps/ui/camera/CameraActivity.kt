@@ -4,18 +4,18 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import com.yhezra.skinsightapps.R
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.yhezra.skinsightapps.data.remote.utils.createFile
+import com.yhezra.skinsightapps.data.remote.utils.timeStamp
 import com.yhezra.skinsightapps.data.remote.utils.uriToFile
 import com.yhezra.skinsightapps.databinding.ActivityCameraBinding
 
@@ -39,17 +39,15 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun getCondition() {
-        isDetection = intent.getBooleanExtra(IS_DETECTION,true)
-        isSkinDisease = intent.getBooleanExtra(IS_SKIN_DISEASE,true)
+        isDetection = intent.getBooleanExtra(IS_DETECTION, true)
+        isSkinDisease = intent.getBooleanExtra(IS_SKIN_DISEASE, true)
     }
 
     private fun setupAction() {
         binding.apply {
             btnCamera.setOnClickListener { takePhoto() }
             btnSwitchCamera.setOnClickListener { startCamera() }
-            btnGallery.setOnClickListener{
-                startGallery()
-            }
+            btnGallery.setOnClickListener { startGallery() }
         }
     }
 
@@ -76,10 +74,10 @@ class CameraActivity : AppCompatActivity() {
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val intent = Intent(this@CameraActivity,ImagePreviewActivity::class.java)
+                    val intent = Intent(this@CameraActivity, ImagePreviewActivity::class.java)
                     intent.putExtra(ImagePreviewActivity.IMAGE_PATH, photoFile.absolutePath)
-                    intent.putExtra(ImagePreviewActivity.IS_DETECTION,isDetection)
-                    intent.putExtra(ImagePreviewActivity.IS_SKIN_DISEASE,isSkinDisease)
+                    intent.putExtra(ImagePreviewActivity.IS_DETECTION, isDetection)
+                    intent.putExtra(ImagePreviewActivity.IS_SKIN_DISEASE, isSkinDisease)
                     intent.putExtra(
                         "isBackCamera",
                         cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA
@@ -97,10 +95,10 @@ class CameraActivity : AppCompatActivity() {
                 val selectedImg = result.data?.data as Uri
                 selectedImg.let { uri ->
                     val imageFile = uriToFile(uri, this@CameraActivity)
-                    val intent = Intent(this@CameraActivity,ImagePreviewActivity::class.java)
+                    val intent = Intent(this@CameraActivity, ImagePreviewActivity::class.java)
                     intent.putExtra(ImagePreviewActivity.IMAGE_PATH, imageFile.absolutePath)
-                    intent.putExtra(ImagePreviewActivity.IS_DETECTION,isDetection)
-                    intent.putExtra(ImagePreviewActivity.IS_SKIN_DISEASE,isSkinDisease)
+                    intent.putExtra(ImagePreviewActivity.IS_DETECTION, isDetection)
+                    intent.putExtra(ImagePreviewActivity.IS_SKIN_DISEASE, isSkinDisease)
                     startActivity(intent)
                     finish()
                 }
@@ -128,12 +126,39 @@ class CameraActivity : AppCompatActivity() {
 
             try {
                 cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(
+                val camera = cameraProvider.bindToLifecycle(
                     this,
                     cameraSelector,
                     preview,
                     imageCapture
                 )
+
+                val cameraInfo = camera.cameraInfo
+                val hasFlashUnit = cameraInfo.hasFlashUnit()
+
+                if (hasFlashUnit) {
+                    val cameraControl = camera.cameraControl
+
+                    cameraControl.enableTorch(false)
+
+                    binding.btnFlash.setOnClickListener {
+                        val newFlashMode = camera.cameraInfo.torchState.value
+
+                        if (newFlashMode == TorchState.OFF) {
+                            cameraControl.enableTorch(true)
+                            binding.btnFlash.setImageResource(R.drawable.ic_flash_on)
+                        } else {
+                            cameraControl.enableTorch(false)
+                            binding.btnFlash.setImageResource(R.drawable.ic_flash_off)
+                        }
+                    }
+                } else {
+                    Toast.makeText(
+                        this@CameraActivity,
+                        "Perangkat tidak memiliki unit flash",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             } catch (exc: Exception) {
                 Toast.makeText(
                     this@CameraActivity,

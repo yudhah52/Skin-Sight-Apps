@@ -101,24 +101,11 @@ class SignUpActivity : AppCompatActivity() {
                 }
 
                 else -> {
-                    val moveToMainMenuActivity =
-                        Intent(this@SignUpActivity, MainMenuActivity::class.java)
-                    startActivity(
-                        moveToMainMenuActivity,
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(this@SignUpActivity)
-                            .toBundle()
-                    )
-                    finish()
-//                    signupViewModel.saveUser(UserModel(name, email, password, false))
-//                    AlertDialog.Builder(this).apply {
-//                        setTitle("Berhasil!")
-//                        setMessage("Akun sudah berhasil dibuat sudah jadi nih. Yuk, login dan belajar coding.")
-//                        setPositiveButton("Lanjut") { _, _ ->
-//                            finish()
-//                        }
-//                        create()
-//                        show()
-//                    }
+                    Toast.makeText(
+                        this@SignUpActivity,
+                        "Isi email dengan benar",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

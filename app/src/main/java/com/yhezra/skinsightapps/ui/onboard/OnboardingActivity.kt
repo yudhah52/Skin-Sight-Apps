@@ -100,13 +100,13 @@ class OnboardingActivity : AppCompatActivity() {
 
     private fun setButtonVisibility() {
         binding.apply {
-            if (currentPosition == onboardList.size - 1)
-                btnRightOnboard.visibility = View.INVISIBLE
-            else if (currentPosition == 0)
-                btnLeftOnboard.visibility = View.INVISIBLE
-            else {
-                btnLeftOnboard.visibility = View.VISIBLE
-                btnRightOnboard.visibility = View.VISIBLE
+            when (currentPosition) {
+                onboardList.size - 1 -> btnRightOnboard.visibility = View.INVISIBLE
+                0 -> btnLeftOnboard.visibility = View.INVISIBLE
+                else -> {
+                    btnLeftOnboard.visibility = View.VISIBLE
+                    btnRightOnboard.visibility = View.VISIBLE
+                }
             }
 
             if (currentPosition == onboardList.size - 1)

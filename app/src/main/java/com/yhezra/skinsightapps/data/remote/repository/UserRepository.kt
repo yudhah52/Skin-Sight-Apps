@@ -42,7 +42,6 @@ class UserRepository private constructor(
         phone: String
     ): Flow<Result<String>> = flow {
         emit(Result.Loading)
-
         try {
             val response = userApiService.register(email, password, name, phone)
             val token = response.data.uid

@@ -3,21 +3,17 @@ package com.yhezra.skinsightapps.ui.detection
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.databinding.FragmentDetectionBinding
 import com.yhezra.skinsightapps.ui.camera.CameraActivity
-import java.io.File
 
 class DetectionFragment : Fragment() {
 
@@ -28,7 +24,7 @@ class DetectionFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentDetectionBinding.inflate(inflater, container, false)
         return binding.root
     }
