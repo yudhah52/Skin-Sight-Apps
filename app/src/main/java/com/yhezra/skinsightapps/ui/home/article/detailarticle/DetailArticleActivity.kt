@@ -17,7 +17,7 @@ import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.data.local.Result
 import com.yhezra.skinsightapps.data.remote.model.detailarticle.DataDetailArticle
 import com.yhezra.skinsightapps.databinding.ActivityDetailArticleBinding
-import com.yhezra.skinsightapps.ui.home.ArticleViewModelFactory
+import com.yhezra.skinsightapps.ui.home.article.ArticleViewModelFactory
 import com.yhezra.skinsightapps.ui.home.article.ArticleViewModel
 
 class DetailArticleActivity : AppCompatActivity(), View.OnClickListener {

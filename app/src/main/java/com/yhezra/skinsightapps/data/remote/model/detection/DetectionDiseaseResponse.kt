@@ -1,0 +1,21 @@
+package com.yhezra.skinsightapps.data.remote.model.detection
+
+import com.google.gson.annotations.SerializedName
+
+data class DetectionDiseaseResponse(
+
+	@field:SerializedName("detection_img")
+	val detectionImg: String,
+
+	@field:SerializedName("type")
+	val type: String,
+
+	@field:SerializedName("message")
+	val message: String,
+
+	@field:SerializedName("class")
+	val jsonMemberClass: String,
+
+	@field:SerializedName("status")
+	val status: String
+)

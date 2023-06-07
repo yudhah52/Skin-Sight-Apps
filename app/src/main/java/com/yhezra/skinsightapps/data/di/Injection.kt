@@ -7,6 +7,7 @@ import com.yhezra.skinsightapps.data.local.preference.UserPreference
 import com.yhezra.skinsightapps.data.remote.repository.UserRepository
 import com.yhezra.skinsightapps.data.remote.api.ApiConfig
 import com.yhezra.skinsightapps.data.remote.repository.ArticleRepository
+import com.yhezra.skinsightapps.data.remote.repository.DetectionRepository
 
 object Injection {
 
@@ -16,11 +17,13 @@ object Injection {
         return UserRepository.getInstance(userApiService, authPreferences)
     }
 
-    fun provideArticleRepository(
-        context: Context,
-        dataStore: DataStore<Preferences>
-    ): ArticleRepository {
+    fun provideArticleRepository(): ArticleRepository {
         val apiService = ApiConfig.getArticleApiService()
         return ArticleRepository.getInstance(apiService)
+    }
+
+    fun provideDetectionRepository(): DetectionRepository {
+        val apiService = ApiConfig.getDetectionApiService()
+        return DetectionRepository.getInstance(apiService)
     }
 }

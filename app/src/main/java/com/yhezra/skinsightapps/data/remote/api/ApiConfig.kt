@@ -43,5 +43,22 @@ class ApiConfig {
                 .build()
             return retrofit.create(ArticleApiService::class.java)
         }
+
+        fun getDetectionApiService(): DetectionApiService{
+            val loggingInterceptor = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            } else {
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+            }
+            val client = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build()
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://skin-disease-api-47y47bgawa-et.a.run.app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+            return retrofit.create(DetectionApiService::class.java)
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.yhezra.skinsightapps.ui.home
+package com.yhezra.skinsightapps.ui.home.article
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.yhezra.skinsightapps.data.di.Injection
 import com.yhezra.skinsightapps.data.remote.repository.ArticleRepository
-import com.yhezra.skinsightapps.ui.home.article.ArticleViewModel
 
 class ArticleViewModelFactory(
     private val articleRepository: ArticleRepository
@@ -26,13 +25,13 @@ class ArticleViewModelFactory(
     companion object {
         @Volatile
         private var instance: ArticleViewModelFactory? = null
-        fun getInstance(context: Context, dataStore: DataStore<Preferences>): ArticleViewModelFactory =
+        fun getInstance(
+            context: Context,
+            dataStore: DataStore<Preferences>
+        ): ArticleViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: ArticleViewModelFactory(
-                    Injection.provideArticleRepository(
-                        context,
-                        dataStore
-                    )
+                    Injection.provideArticleRepository()
                 )
             }.also { instance = it }
     }
