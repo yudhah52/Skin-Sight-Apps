@@ -1,7 +1,10 @@
 package com.yhezra.skinsightapps.data.remote.model.detection
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class DetectionDiseaseResponse(
 
 	@field:SerializedName("detection_img")
@@ -18,4 +21,4 @@ data class DetectionDiseaseResponse(
 
 	@field:SerializedName("status")
 	val status: String
-)
+): Parcelable

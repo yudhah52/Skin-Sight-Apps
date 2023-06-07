@@ -19,6 +19,8 @@ import com.yhezra.skinsightapps.databinding.ActivityImagePreviewBinding
 import com.yhezra.skinsightapps.ui.auth.AuthViewModel
 import com.yhezra.skinsightapps.ui.auth.AuthViewModelFactory
 import com.yhezra.skinsightapps.ui.detection.DetectionResultActivity
+import com.yhezra.skinsightapps.ui.detection.DetectionViewModel
+import com.yhezra.skinsightapps.ui.detection.DetectionViewModelFactory
 import java.io.File
 
 class ImagePreviewActivity : AppCompatActivity() {
@@ -34,6 +36,10 @@ class ImagePreviewActivity : AppCompatActivity() {
 
     private val authViewModel: AuthViewModel by viewModels {
         AuthViewModelFactory.getInstance(dataStore)
+    }
+
+    private val detectionViewModel: DetectionViewModel by viewModels {
+        DetectionViewModelFactory.getInstance()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,17 +67,57 @@ class ImagePreviewActivity : AppCompatActivity() {
 
     private fun setAction() {
         binding.btnUpload.setOnClickListener {
-            Log.i("SIUUUU", "SIUUUU $isDetection $isSkinDisease")
             if (isDetection) {
-                val intent = Intent(this@ImagePreviewActivity, DetectionResultActivity::class.java)
-                startActivity(intent)
-                finish()
+                postDetection(isSkinDisease)
+
             } else {
                 uploadProfilePicture()
-
             }
-
         }
+    }
+
+    private fun postDetection(isSkinDisease: Boolean) {
+        if (!uid.isNullOrEmpty())
+            if (isSkinDisease) {
+                detectionViewModel.postDetectionDisease(uid!!, imageFile!!)
+                    .observe(this) { result ->
+                        when (result) {
+                            is Result.Loading -> {
+                                binding.progressBar.visibility = View.VISIBLE
+                            }
+                            is Result.Success -> {
+                                binding.progressBar.visibility = View.GONE
+                                val dataResult = result.data
+                                val intent = Intent(
+                                    this@ImagePreviewActivity,
+                                    DetectionResultActivity::class.java
+                                )
+                                intent.putExtra(
+                                    DetectionResultActivity.DETECTION_RESULT,
+                                    dataResult
+                                )
+                                startActivity(intent)
+                                finish()
+                            }
+                            is Result.Error -> {
+                                binding.progressBar.visibility = View.GONE
+                                Toast.makeText(
+                                    this,
+                                    "Failed to detect disease",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            }
+                        }
+                    }
+            } else
+                Toast.makeText(
+                    this,
+                    "Failed to obtain user authentication",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+
     }
 
     private fun uploadProfilePicture() {
@@ -92,7 +138,7 @@ class ImagePreviewActivity : AppCompatActivity() {
                     binding.progressBar.visibility = View.VISIBLE
                 }
                 is Result.Success -> {
-                    Log.i("IMAGEPREVIEW","SIUUUU BERHASIL ${result.data}")
+                    Log.i("IMAGEPREVIEW", "SIUUUU BERHASIL ${result.data}")
                     binding.progressBar.visibility = View.GONE
                     AlertDialog.Builder(this).apply {
                         setTitle("Success!")

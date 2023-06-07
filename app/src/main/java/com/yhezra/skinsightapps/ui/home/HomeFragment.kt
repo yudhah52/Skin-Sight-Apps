@@ -60,10 +60,8 @@ class HomeFragment : Fragment() {
 
         authViewModel.isLogin().observe(requireActivity()) { uid ->
             if (uid.isNullOrEmpty()) {
-                Log.i("PROFILE", "SIUUUU GA GET DATA")
                 navigateToSignup()
             } else {
-                Log.i("PROFILE", "SIUUUU GETDATA $uid")
                 getDataUser(uid)
             }
         }
