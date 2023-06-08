@@ -109,7 +109,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setDataUserView(dataUser: DataUser) {
-        Log.i("SETDATAUSER", "SIUUUU ${dataUser.imgUrl}")
+        Log.i("SETDATAUSER", "Image ${dataUser.imgUrl}")
         val defaultImg = "https://picsum.photos/200/300.jpg"
         val shownImgUrl = dataUser.imgUrl ?: defaultImg
         binding.apply {

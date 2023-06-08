@@ -45,7 +45,7 @@
   <string name="greet">Welcome, <b>%1$s!</b></string>
   <string name="title_classification">Klasifikasi SkinSight</string>
   <string name="try_now">Coba Sekarang!</string>
-  <string name="try_text">Ayo eksplorasi penyakit kulit dan kenali skintonemu dengan akurat untuk memahami variasi warna kulit dan memilih produk perawatan yang tepat untuk menjaga keindahan dan kesehatan kulit kamu! </string>
+  <string name="try_text">Ayo eksplorasi penyakit kulit dan kenali skintonemu dengan tepat untuk menjaga keindahan dan kesehatan kulit kamu!</string>
   <string name="reset_password">Reset Password</string>
   <string name="reset">Reset</string>
   <string name="msg_success_reset">Link reset password telah di kirim ke email</string>
