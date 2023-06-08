@@ -229,7 +229,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:background="@drawable/rounded_corner_10_red"
+        android:background="@drawable/rounded_corner_10_green"
         android:text="@string/cancel"
         android:textAllCaps="false"
         android:textColor="@color/white"
