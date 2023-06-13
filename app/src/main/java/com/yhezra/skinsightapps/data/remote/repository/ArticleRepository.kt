@@ -1,9 +1,7 @@
 package com.yhezra.skinsightapps.data.remote.repository
 
 import android.util.Log
-import com.yhezra.skinsightapps.data.local.preference.UserPreference
 import com.yhezra.skinsightapps.data.remote.api.ArticleApiService
-import com.yhezra.skinsightapps.data.remote.api.UserApiService
 import com.yhezra.skinsightapps.data.remote.model.article.ArticleItem
 import com.yhezra.skinsightapps.data.local.Result
 import com.yhezra.skinsightapps.data.remote.model.detailarticle.DataDetailArticle
@@ -25,7 +23,7 @@ class ArticleRepository private constructor(
         }
     }
 
-    fun getDetailArticle(id:String): Flow<Result<DataDetailArticle>> = flow {
+    fun getDetailArticle(id: String): Flow<Result<DataDetailArticle>> = flow {
         emit(Result.Loading)
         try {
             val response = articleApiService.getDetailArticle(id)

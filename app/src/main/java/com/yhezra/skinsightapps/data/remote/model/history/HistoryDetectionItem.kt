@@ -17,5 +17,8 @@ data class HistoryDetectionItem(
     val detectionImg: String,
 
     @field:SerializedName("type")
-    val type: String
+    val type: String,
+
+    @field:SerializedName("description")
+    val description: String
 ) : Parcelable

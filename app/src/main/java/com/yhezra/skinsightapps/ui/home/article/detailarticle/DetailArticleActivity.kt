@@ -24,8 +24,8 @@ class DetailArticleActivity : AppCompatActivity(), View.OnClickListener {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
 
     private lateinit var binding: ActivityDetailArticleBinding
-    private val articleViewModel: ArticleViewModel by viewModels{
-        ArticleViewModelFactory.getInstance(this,dataStore)
+    private val articleViewModel: ArticleViewModel by viewModels {
+        ArticleViewModelFactory.getInstance(this, dataStore)
     }
 
     private var id: String? = null
@@ -45,8 +45,8 @@ class DetailArticleActivity : AppCompatActivity(), View.OnClickListener {
         id = intent.getStringExtra(ID_ARTICLE)
 
         articleViewModel.getDetailArticle(id = id!!).observe(this) { result ->
-            when(result){
-                is Result.Loading ->{
+            when (result) {
+                is Result.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
                 }
                 is Result.Success -> {

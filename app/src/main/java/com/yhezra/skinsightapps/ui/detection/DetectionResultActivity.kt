@@ -1,8 +1,11 @@
 package com.yhezra.skinsightapps.ui.detection
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import android.view.View
+import androidx.core.text.HtmlCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.yhezra.skinsightapps.R
@@ -25,7 +28,6 @@ class DetectionResultActivity : AppCompatActivity(), View.OnClickListener {
 
         getDataResult()
         setToolbar()
-
     }
 
     private fun getDataResult() {
@@ -38,7 +40,8 @@ class DetectionResultActivity : AppCompatActivity(), View.OnClickListener {
                 currentDate = currentDate,
                 imgUrl = dataResultDetection.detectionImg,
                 classResult = dataResultDetection.jsonMemberClass,
-                type = dataResultDetection.type
+                type = dataResultDetection.type,
+                description = dataResultDetection.description
             )
         } else {
             val dataResultHistory =
@@ -48,7 +51,8 @@ class DetectionResultActivity : AppCompatActivity(), View.OnClickListener {
                 currentDate = currentDate,
                 imgUrl = dataResultHistory.detectionImg,
                 classResult = dataResultHistory.predictedClass,
-                type = dataResultHistory.type
+                type = dataResultHistory.type,
+                description = dataResultHistory.description
             )
         }
     }
@@ -57,17 +61,26 @@ class DetectionResultActivity : AppCompatActivity(), View.OnClickListener {
         currentDate: String = "",
         imgUrl: String = "",
         classResult: String = "",
-        type: String = ""
+        type: String = "",
+        description: String = ""
     ) {
         binding.apply {
             tvDate.text = currentDate
             tvTitle.text = type
             cardResult.tvDetectionResult.text = classResult
+//            tvDescDetection.text = description
             Glide.with(binding.root)
                 .load(imgUrl)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .into(ivDetectionResult)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                tvDescDetection.text =
+                    Html.fromHtml(description, Html.FROM_HTML_MODE_COMPACT)
+            } else {
+                tvDescDetection.text =
+                    HtmlCompat.fromHtml(description, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            }
         }
     }
 

@@ -7,18 +7,21 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class DetectionDiseaseResponse(
 
-	@field:SerializedName("detection_img")
-	val detectionImg: String,
+    @field:SerializedName("detection_img")
+    val detectionImg: String,
 
-	@field:SerializedName("type")
-	val type: String,
+    @field:SerializedName("type")
+    val type: String,
 
-	@field:SerializedName("message")
-	val message: String,
+    @field:SerializedName("message")
+    val message: String,
 
-	@field:SerializedName("class")
-	val jsonMemberClass: String,
+    @field:SerializedName("class")
+    val jsonMemberClass: String,
 
-	@field:SerializedName("status")
-	val status: String
-): Parcelable
+    @field:SerializedName("status")
+    val status: String,
+
+    @field:SerializedName("description")
+    val description: String
+) : Parcelable
