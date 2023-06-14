@@ -1,6 +1,5 @@
 package com.yhezra.skinsightapps.data.di
 
-import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.yhezra.skinsightapps.data.local.preference.UserPreference
@@ -22,8 +21,13 @@ object Injection {
         return ArticleRepository.getInstance(apiService)
     }
 
-    fun provideDetectionRepository(): DetectionRepository {
-        val apiService = ApiConfig.getDetectionApiService()
+    fun provideDetectionDiseaseRepository(): DetectionRepository {
+        val apiService = ApiConfig.getDetectionDiseaseApiService()
+        return DetectionRepository.getInstance(apiService)
+    }
+
+    fun provideDetectionSkintoneRepository(): DetectionRepository {
+        val apiService = ApiConfig.getDetectionSkintoneApiService()
         return DetectionRepository.getInstance(apiService)
     }
 }

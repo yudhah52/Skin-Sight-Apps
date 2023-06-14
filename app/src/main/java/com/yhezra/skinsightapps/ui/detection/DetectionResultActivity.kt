@@ -4,12 +4,14 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.yhezra.skinsightapps.R
-import com.yhezra.skinsightapps.data.remote.model.detection.DetectionDiseaseResponse
+import com.yhezra.skinsightapps.data.remote.model.detection.DetectionResponse
 import com.yhezra.skinsightapps.data.remote.model.history.HistoryDetectionItem
 import com.yhezra.skinsightapps.databinding.ActivityDetectionResultBinding
 import java.text.SimpleDateFormat
@@ -34,14 +36,15 @@ class DetectionResultActivity : AppCompatActivity(), View.OnClickListener {
         isHistory = intent.getBooleanExtra(IS_HISTORY, false)
         if (!isHistory) {
             val dataResultDetection =
-                intent.getParcelableExtra<DetectionDiseaseResponse>(DETECTION_RESULT) as DetectionDiseaseResponse
+                intent.getParcelableExtra<DetectionResponse>(DETECTION_RESULT) as DetectionResponse
             currentDate = SimpleDateFormat("dd MMM yyyy HH:mm:ss").format(Date())
             setDataResultView(
                 currentDate = currentDate,
                 imgUrl = dataResultDetection.detectionImg,
                 classResult = dataResultDetection.jsonMemberClass,
                 type = dataResultDetection.type,
-                description = dataResultDetection.description
+                description = dataResultDetection.description,
+                recommendation = dataResultDetection.recommendation ?: ""
             )
         } else {
             val dataResultHistory =
@@ -52,7 +55,9 @@ class DetectionResultActivity : AppCompatActivity(), View.OnClickListener {
                 imgUrl = dataResultHistory.detectionImg,
                 classResult = dataResultHistory.predictedClass,
                 type = dataResultHistory.type,
-                description = dataResultHistory.description
+                description = dataResultHistory.description,
+                recommendation = dataResultHistory.recommendation ?: ""
+
             )
         }
     }
@@ -62,13 +67,24 @@ class DetectionResultActivity : AppCompatActivity(), View.OnClickListener {
         imgUrl: String = "",
         classResult: String = "",
         type: String = "",
-        description: String = ""
+        description: String = "",
+        recommendation: String = ""
     ) {
         binding.apply {
             tvDate.text = currentDate
             tvTitle.text = type
             tvDetectionResult.text = classResult
             tvDescDetection.text = description
+            if (recommendation.isNotEmpty()) {
+                Log.i("DetectionResult", "recommendation $recommendation")
+                ivDescResult.setImageDrawable(
+                    ResourcesCompat.getDrawable(
+                        resources, R.drawable.img_skintone_circle, null
+                    )
+                )
+                cvRecommendation.visibility = View.VISIBLE
+                tvDescRecommendation.text = recommendation
+            }
             Glide.with(binding.root)
                 .load(imgUrl)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)

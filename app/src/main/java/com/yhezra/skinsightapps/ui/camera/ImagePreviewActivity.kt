@@ -20,7 +20,8 @@ import com.yhezra.skinsightapps.ui.auth.AuthViewModel
 import com.yhezra.skinsightapps.ui.auth.AuthViewModelFactory
 import com.yhezra.skinsightapps.ui.detection.DetectionResultActivity
 import com.yhezra.skinsightapps.ui.detection.DetectionViewModel
-import com.yhezra.skinsightapps.ui.detection.DetectionViewModelFactory
+import com.yhezra.skinsightapps.ui.detection.DetectionDiseaseViewModelFactory
+import com.yhezra.skinsightapps.ui.detection.DetectionSkintoneViewModelFactory
 import java.io.File
 
 class ImagePreviewActivity : AppCompatActivity() {
@@ -38,8 +39,12 @@ class ImagePreviewActivity : AppCompatActivity() {
         AuthViewModelFactory.getInstance(dataStore)
     }
 
-    private val detectionViewModel: DetectionViewModel by viewModels {
-        DetectionViewModelFactory.getInstance()
+    private val detectionDiseaseViewModel: DetectionViewModel by viewModels {
+        DetectionDiseaseViewModelFactory.getInstance()
+    }
+
+    private val detectionSkintoneViewModel:DetectionViewModel by viewModels {
+        DetectionSkintoneViewModelFactory.getInstance()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,9 +82,9 @@ class ImagePreviewActivity : AppCompatActivity() {
     }
 
     private fun postDetection(isSkinDisease: Boolean) {
-        if (!uid.isNullOrEmpty())
+        if (!uid.isNullOrEmpty()) {
             if (isSkinDisease) {
-                detectionViewModel.postDetectionDisease(uid!!, imageFile!!)
+                detectionDiseaseViewModel.postDetectionDisease(uid!!, imageFile!!)
                     .observe(this) { result ->
                         when (result) {
                             is Result.Loading -> {
@@ -110,12 +115,45 @@ class ImagePreviewActivity : AppCompatActivity() {
                             }
                         }
                     }
-            } else
-                Toast.makeText(
-                    this,
-                    "Failed to obtain user authentication",
-                    Toast.LENGTH_SHORT
-                ).show()
+            } else {
+                detectionSkintoneViewModel.postDetectionSkintone(uid!!, imageFile!!)
+                    .observe(this) { result ->
+                        when (result) {
+                            is Result.Loading -> {
+                                binding.progressBar.visibility = View.VISIBLE
+                            }
+                            is Result.Success -> {
+                                binding.progressBar.visibility = View.GONE
+                                val dataResult = result.data
+                                val intent = Intent(
+                                    this@ImagePreviewActivity,
+                                    DetectionResultActivity::class.java
+                                )
+                                intent.putExtra(
+                                    DetectionResultActivity.DETECTION_RESULT,
+                                    dataResult
+                                )
+                                startActivity(intent)
+                                finish()
+                            }
+                            is Result.Error -> {
+                                binding.progressBar.visibility = View.GONE
+                                Toast.makeText(
+                                    this,
+                                    "Failed to detect skintone",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            }
+                        }
+                    }
+            }
+        } else
+            Toast.makeText(
+                this,
+                "Failed to obtain user authentication",
+                Toast.LENGTH_SHORT
+            ).show()
 
 
     }

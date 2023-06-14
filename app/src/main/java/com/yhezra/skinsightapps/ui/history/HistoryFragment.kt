@@ -3,7 +3,6 @@ package com.yhezra.skinsightapps.ui.history
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,20 +14,15 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.yhezra.skinsightapps.R
 import com.yhezra.skinsightapps.data.local.Result
-import com.yhezra.skinsightapps.data.remote.model.article.ArticleItem
 import com.yhezra.skinsightapps.data.remote.model.history.HistoryDetectionItem
 import com.yhezra.skinsightapps.databinding.FragmentHistoryBinding
 import com.yhezra.skinsightapps.ui.auth.AuthViewModel
 import com.yhezra.skinsightapps.ui.auth.AuthViewModelFactory
 import com.yhezra.skinsightapps.ui.detection.DetectionResultActivity
 import com.yhezra.skinsightapps.ui.detection.DetectionViewModel
-import com.yhezra.skinsightapps.ui.detection.DetectionViewModelFactory
+import com.yhezra.skinsightapps.ui.detection.DetectionDiseaseViewModelFactory
 import com.yhezra.skinsightapps.ui.history.adapter.ListHistoryAdapter
-import com.yhezra.skinsightapps.ui.home.article.ArticleViewModel
-import com.yhezra.skinsightapps.ui.home.article.ArticleViewModelFactory
-import com.yhezra.skinsightapps.ui.home.article.adapter.ListArticleAdapter
 
 class HistoryFragment : Fragment() {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
@@ -38,7 +32,7 @@ class HistoryFragment : Fragment() {
     private var uid: String = ""
 
     private val detectionViewModel: DetectionViewModel by viewModels {
-        DetectionViewModelFactory.getInstance()
+        DetectionDiseaseViewModelFactory.getInstance()
     }
 
     private val authViewModel: AuthViewModel by viewModels {

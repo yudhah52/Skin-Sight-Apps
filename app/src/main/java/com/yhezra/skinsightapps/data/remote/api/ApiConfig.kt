@@ -17,8 +17,16 @@ class ApiConfig {
                     .build()
                 chain.proceed(requestHeaders)
             }
+
+            val loggingInterceptor = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            } else {
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+            }
+
             val client = OkHttpClient.Builder()
                 .addInterceptor(authInterceptor)
+                .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://user-api-47y47bgawa-et.a.run.app/")
@@ -45,7 +53,7 @@ class ApiConfig {
             return retrofit.create(ArticleApiService::class.java)
         }
 
-        fun getDetectionApiService(): DetectionApiService{
+        fun getDetectionDiseaseApiService(): DetectionApiService{
             val loggingInterceptor = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             } else {
@@ -59,6 +67,26 @@ class ApiConfig {
                 .build()
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://skin-disease-api-47y47bgawa-et.a.run.app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+            return retrofit.create(DetectionApiService::class.java)
+        }
+
+        fun getDetectionSkintoneApiService(): DetectionApiService{
+            val loggingInterceptor = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            } else {
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+            }
+            val client = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .connectTimeout(60,TimeUnit.SECONDS)
+                .readTimeout(60,TimeUnit.SECONDS)
+                .writeTimeout(60,TimeUnit.SECONDS)
+                .build()
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://skintone-api-47y47bgawa-et.a.run.app/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

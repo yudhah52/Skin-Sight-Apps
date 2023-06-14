@@ -2,7 +2,7 @@ package com.yhezra.skinsightapps.data.remote.repository
 
 import android.util.Log
 import com.yhezra.skinsightapps.data.remote.api.DetectionApiService
-import com.yhezra.skinsightapps.data.remote.model.detection.DetectionDiseaseResponse
+import com.yhezra.skinsightapps.data.remote.model.detection.DetectionResponse
 import com.yhezra.skinsightapps.data.local.Result
 import com.yhezra.skinsightapps.data.remote.model.history.HistoryDetectionItem
 import com.yhezra.skinsightapps.data.remote.utils.reduceFileImage
@@ -30,7 +30,7 @@ class DetectionRepository(
 
     fun postDetectionDisease(
         uid: String, imageFile: File
-    ): Flow<Result<DetectionDiseaseResponse>> = flow {
+    ): Flow<Result<DetectionResponse>> = flow {
         emit(Result.Loading)
         try{
             val reducedFile = reduceFileImage(imageFile)
@@ -38,6 +38,25 @@ class DetectionRepository(
             val imageMultipart: MultipartBody.Part =
                 MultipartBody.Part.createFormData("file", imageFile.name, requestImageFile)
             val response = detectionApiService.postDetectionDisease(
+                uid, imageMultipart
+            )
+            emit(Result.Success(response))
+        }catch (e:Exception){
+            Log.d("DetectionRepository", "postDetectionDisease: ${e.message.toString()}")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun postDetectionSkintone(
+        uid: String, imageFile: File
+    ): Flow<Result<DetectionResponse>> = flow {
+        emit(Result.Loading)
+        try{
+            val reducedFile = reduceFileImage(imageFile)
+            val requestImageFile = reducedFile.asRequestBody("image/jpeg".toMediaType())
+            val imageMultipart: MultipartBody.Part =
+                MultipartBody.Part.createFormData("file", imageFile.name, requestImageFile)
+            val response = detectionApiService.postDetectionSkintone(
                 uid, imageMultipart
             )
             emit(Result.Success(response))

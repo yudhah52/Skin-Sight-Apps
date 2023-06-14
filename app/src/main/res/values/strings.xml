@@ -56,4 +56,5 @@
   <string name="new_password">New Password</string>
   <string name="current_password">Current Password</string>
   <string name="title_article">Artikel Terkait</string>
+  <string name="recommendation">Recommendation</string>
 </resources>

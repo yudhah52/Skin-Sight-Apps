@@ -1,16 +1,11 @@
 package com.yhezra.skinsightapps.ui.detection
 
-import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.yhezra.skinsightapps.data.di.Injection
 import com.yhezra.skinsightapps.data.remote.repository.DetectionRepository
-import com.yhezra.skinsightapps.ui.home.article.ArticleViewModel
-import com.yhezra.skinsightapps.ui.home.article.ArticleViewModelFactory
 
-class DetectionViewModelFactory(
+class DetectionDiseaseViewModelFactory(
     private val detectionRepository: DetectionRepository
 ):ViewModelProvider.NewInstanceFactory() {
 
@@ -26,12 +21,12 @@ class DetectionViewModelFactory(
 
     companion object {
         @Volatile
-        private var instance: DetectionViewModelFactory? = null
+        private var instance: DetectionDiseaseViewModelFactory? = null
         fun getInstance(
-        ): DetectionViewModelFactory =
+        ): DetectionDiseaseViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: DetectionViewModelFactory(
-                    Injection.provideDetectionRepository()
+                instance ?: DetectionDiseaseViewModelFactory(
+                    Injection.provideDetectionDiseaseRepository()
                 )
             }.also { instance = it }
     }

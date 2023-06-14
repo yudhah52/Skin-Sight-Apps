@@ -11,7 +11,13 @@ class DetectionViewModel(private val detectionRepository: DetectionRepository):V
         uid: String, imageFile: File
     ) = detectionRepository.postDetectionDisease(uid,imageFile).asLiveData()
 
+    fun postDetectionSkintone(
+        uid: String, imageFile: File
+    ) = detectionRepository.postDetectionSkintone(uid,imageFile).asLiveData()
+
     fun getAllHistory(
         uid: String
     ) = detectionRepository.getAllHistory(uid).asLiveData()
+
+
 }

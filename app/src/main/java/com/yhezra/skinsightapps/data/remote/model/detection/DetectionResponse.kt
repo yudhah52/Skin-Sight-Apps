@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class DetectionDiseaseResponse(
+data class DetectionResponse(
 
     @field:SerializedName("detection_img")
     val detectionImg: String,
@@ -23,5 +23,8 @@ data class DetectionDiseaseResponse(
     val status: String,
 
     @field:SerializedName("description")
-    val description: String
+    val description: String,
+
+    @field:SerializedName("recommendation")
+    val recommendation: String? = null
 ) : Parcelable
