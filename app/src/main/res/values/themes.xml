@@ -20,6 +20,11 @@
         <item name="android:windowExitTransition">@android:transition/no_transition</item>
     </style>
 
+    <style name="roundedCorner25">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">25dp</item>
+    </style>
+
     <style name="roundedCorner20">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">20dp</item>

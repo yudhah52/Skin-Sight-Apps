@@ -67,8 +67,8 @@ class DetectionResultActivity : AppCompatActivity(), View.OnClickListener {
         binding.apply {
             tvDate.text = currentDate
             tvTitle.text = type
-            cardResult.tvDetectionResult.text = classResult
-//            tvDescDetection.text = description
+            tvDetectionResult.text = classResult
+            tvDescDetection.text = description
             Glide.with(binding.root)
                 .load(imgUrl)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
