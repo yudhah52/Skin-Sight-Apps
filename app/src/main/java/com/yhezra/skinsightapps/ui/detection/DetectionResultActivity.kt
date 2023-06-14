@@ -43,7 +43,7 @@ class DetectionResultActivity : AppCompatActivity(), View.OnClickListener {
                 imgUrl = dataResultDetection.detectionImg,
                 classResult = dataResultDetection.jsonMemberClass,
                 type = dataResultDetection.type,
-                description = dataResultDetection.description,
+                description = dataResultDetection.description ?: "",
                 recommendation = dataResultDetection.recommendation ?: ""
             )
         } else {
@@ -55,7 +55,7 @@ class DetectionResultActivity : AppCompatActivity(), View.OnClickListener {
                 imgUrl = dataResultHistory.detectionImg,
                 classResult = dataResultHistory.predictedClass,
                 type = dataResultHistory.type,
-                description = dataResultHistory.description,
+                description = dataResultHistory.description ?: "",
                 recommendation = dataResultHistory.recommendation ?: ""
 
             )
@@ -74,7 +74,8 @@ class DetectionResultActivity : AppCompatActivity(), View.OnClickListener {
             tvDate.text = currentDate
             tvTitle.text = type
             tvDetectionResult.text = classResult
-            tvDescDetection.text = description
+            if (description.isNotEmpty())
+                tvDescDetection.text = description
             if (recommendation.isNotEmpty()) {
                 Log.i("DetectionResult", "recommendation $recommendation")
                 ivDescResult.setImageDrawable(

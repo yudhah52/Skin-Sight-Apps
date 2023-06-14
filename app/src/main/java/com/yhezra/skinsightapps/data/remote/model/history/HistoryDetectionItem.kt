@@ -20,7 +20,7 @@ data class HistoryDetectionItem(
     val type: String,
 
     @field:SerializedName("description")
-    val description: String,
+    val description: String?,
 
     @field:SerializedName("recommendation")
     val recommendation: String? = null

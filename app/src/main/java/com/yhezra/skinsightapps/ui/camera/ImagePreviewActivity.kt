@@ -55,6 +55,7 @@ class ImagePreviewActivity : AppCompatActivity() {
         authViewModel.isLogin().observe(this) { uid ->
             if (!uid.isNullOrEmpty()) {
                 this.uid = uid
+                Log.i("PREVIEW", "UID : ${this.uid!!}")
             }
         }
 
@@ -140,7 +141,7 @@ class ImagePreviewActivity : AppCompatActivity() {
                                 binding.progressBar.visibility = View.GONE
                                 Toast.makeText(
                                     this,
-                                    "Failed to detect skintone",
+                                    result.error,
                                     Toast.LENGTH_SHORT
                                 ).show()
 

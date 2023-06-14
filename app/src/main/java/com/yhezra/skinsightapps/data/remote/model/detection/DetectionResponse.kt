@@ -23,7 +23,7 @@ data class DetectionResponse(
     val status: String,
 
     @field:SerializedName("description")
-    val description: String,
+    val description: String?,
 
     @field:SerializedName("recommendation")
     val recommendation: String? = null

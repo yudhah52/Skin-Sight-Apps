@@ -3,6 +3,7 @@ package com.yhezra.skinsightapps.ui.history
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,6 +54,7 @@ class HistoryFragment : Fragment() {
         authViewModel.isLogin().observe(requireActivity()) { uid ->
             if (!uid.isNullOrEmpty()) {
                 this.uid = uid
+                Log.i("HISTORY", "UID : ${this.uid}")
             }
         }
 
@@ -61,6 +63,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun getAllHistory(uid: String) {
+        Log.i("HISTORY2", "UID : $uid")
         detectionViewModel.getAllHistory(uid).observe(requireActivity()) { result ->
             when (result) {
                 is Result.Loading -> {
@@ -75,7 +78,7 @@ class HistoryFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(
                         requireActivity(),
-                        "Failed to load history",
+                        result.error,
                         Toast.LENGTH_SHORT
                     )
                         .show()
