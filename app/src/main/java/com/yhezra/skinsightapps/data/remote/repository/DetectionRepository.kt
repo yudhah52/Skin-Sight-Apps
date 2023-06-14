@@ -61,7 +61,7 @@ class DetectionRepository(
             )
             emit(Result.Success(response))
         }catch (e:Exception){
-            Log.d("DetectionRepository", "postDetectionDisease: ${e.message.toString()}")
+            Log.d("DetectionRepository", "postDetectionSkintone: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
     }
