@@ -21,7 +21,7 @@ import com.yhezra.skinsightapps.databinding.FragmentHistoryBinding
 import com.yhezra.skinsightapps.ui.auth.AuthViewModel
 import com.yhezra.skinsightapps.ui.auth.AuthViewModelFactory
 import com.yhezra.skinsightapps.ui.detection.DetectionResultActivity
-import com.yhezra.skinsightapps.ui.detection.DetectionViewModel
+import com.yhezra.skinsightapps.ui.detection.DetectionDiseaseViewModel
 import com.yhezra.skinsightapps.ui.detection.DetectionDiseaseViewModelFactory
 import com.yhezra.skinsightapps.ui.history.adapter.ListHistoryAdapter
 
@@ -32,7 +32,7 @@ class HistoryFragment : Fragment() {
     private val binding get() = _binding!!
     private var uid: String = ""
 
-    private val detectionViewModel: DetectionViewModel by viewModels {
+    private val detectionDiseaseViewModel: DetectionDiseaseViewModel by viewModels {
         DetectionDiseaseViewModelFactory.getInstance()
     }
 
@@ -64,7 +64,7 @@ class HistoryFragment : Fragment() {
 
     private fun getAllHistory(uid: String) {
         Log.i("HISTORY2", "UID : $uid")
-        detectionViewModel.getAllHistory(uid).observe(requireActivity()) { result ->
+        detectionDiseaseViewModel.getAllHistory(uid).observe(requireActivity()) { result ->
             when (result) {
                 is Result.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE

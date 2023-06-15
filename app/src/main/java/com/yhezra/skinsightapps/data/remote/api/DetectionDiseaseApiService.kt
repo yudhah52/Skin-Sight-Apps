@@ -5,7 +5,7 @@ import com.yhezra.skinsightapps.data.remote.model.history.HistoryDetectionRespon
 import okhttp3.MultipartBody
 import retrofit2.http.*
 
-interface DetectionApiService {
+interface DetectionDiseaseApiService {
 
     @Multipart
     @POST("detect-disease/{uid}")
@@ -18,12 +18,4 @@ interface DetectionApiService {
     suspend fun getAllHistory(
         @Path("uid") uid: String
     ): HistoryDetectionResponse
-
-    @Multipart
-    @POST("detect-tone/{uid}")
-    suspend fun postDetectionSkintone(
-        @Path("uid") uid: String,
-        @Part file: MultipartBody.Part,
-    ): DetectionResponse
-
 }

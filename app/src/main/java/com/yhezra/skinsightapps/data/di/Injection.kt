@@ -5,8 +5,10 @@ import androidx.datastore.preferences.core.Preferences
 import com.yhezra.skinsightapps.data.local.preference.UserPreference
 import com.yhezra.skinsightapps.data.remote.repository.UserRepository
 import com.yhezra.skinsightapps.data.remote.api.ApiConfig
+import com.yhezra.skinsightapps.data.remote.api.DetectionSkintoneApiService
 import com.yhezra.skinsightapps.data.remote.repository.ArticleRepository
-import com.yhezra.skinsightapps.data.remote.repository.DetectionRepository
+import com.yhezra.skinsightapps.data.remote.repository.DetectionDiseaseRepository
+import com.yhezra.skinsightapps.data.remote.repository.DetectionSkintoneRepository
 
 object Injection {
 
@@ -21,13 +23,13 @@ object Injection {
         return ArticleRepository.getInstance(apiService)
     }
 
-    fun provideDetectionDiseaseRepository(): DetectionRepository {
+    fun provideDetectionDiseaseRepository(): DetectionDiseaseRepository {
         val apiService = ApiConfig.getDetectionDiseaseApiService()
-        return DetectionRepository.getInstance(apiService)
+        return DetectionDiseaseRepository.getInstance(apiService)
     }
 
-    fun provideDetectionSkintoneRepository(): DetectionRepository {
+    fun provideDetectionSkintoneRepository(): DetectionSkintoneRepository {
         val apiService = ApiConfig.getDetectionSkintoneApiService()
-        return DetectionRepository.getInstance(apiService)
+        return DetectionSkintoneRepository.getInstance(apiService)
     }
 }

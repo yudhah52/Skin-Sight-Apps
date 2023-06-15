@@ -18,10 +18,7 @@ import com.yhezra.skinsightapps.data.local.Result
 import com.yhezra.skinsightapps.databinding.ActivityImagePreviewBinding
 import com.yhezra.skinsightapps.ui.auth.AuthViewModel
 import com.yhezra.skinsightapps.ui.auth.AuthViewModelFactory
-import com.yhezra.skinsightapps.ui.detection.DetectionResultActivity
-import com.yhezra.skinsightapps.ui.detection.DetectionViewModel
-import com.yhezra.skinsightapps.ui.detection.DetectionDiseaseViewModelFactory
-import com.yhezra.skinsightapps.ui.detection.DetectionSkintoneViewModelFactory
+import com.yhezra.skinsightapps.ui.detection.*
 import java.io.File
 
 class ImagePreviewActivity : AppCompatActivity() {
@@ -39,11 +36,11 @@ class ImagePreviewActivity : AppCompatActivity() {
         AuthViewModelFactory.getInstance(dataStore)
     }
 
-    private val detectionDiseaseViewModel: DetectionViewModel by viewModels {
+    private val detectionDiseaseViewModel: DetectionDiseaseViewModel by viewModels {
         DetectionDiseaseViewModelFactory.getInstance()
     }
 
-    private val detectionSkintoneViewModel:DetectionViewModel by viewModels {
+    private val detectionSkintoneViewModel: DetectionSkintoneViewModel by viewModels {
         DetectionSkintoneViewModelFactory.getInstance()
     }
 
@@ -58,7 +55,6 @@ class ImagePreviewActivity : AppCompatActivity() {
                 Log.i("PREVIEW", "UID : ${this.uid!!}")
             }
         }
-
         getCondition()
 
         setToolBar()
@@ -112,7 +108,6 @@ class ImagePreviewActivity : AppCompatActivity() {
                                     "Failed to detect disease",
                                     Toast.LENGTH_SHORT
                                 ).show()
-
                             }
                         }
                     }
@@ -141,7 +136,7 @@ class ImagePreviewActivity : AppCompatActivity() {
                                 binding.progressBar.visibility = View.GONE
                                 Toast.makeText(
                                     this,
-                                    result.error,
+                                    "Failed to detect skintone",
                                     Toast.LENGTH_SHORT
                                 ).show()
 
@@ -155,8 +150,6 @@ class ImagePreviewActivity : AppCompatActivity() {
                 "Failed to obtain user authentication",
                 Toast.LENGTH_SHORT
             ).show()
-
-
     }
 
     private fun uploadProfilePicture() {
@@ -196,7 +189,6 @@ class ImagePreviewActivity : AppCompatActivity() {
                         "Failed to update profile picture",
                         Toast.LENGTH_SHORT
                     ).show()
-
                 }
             }
         }

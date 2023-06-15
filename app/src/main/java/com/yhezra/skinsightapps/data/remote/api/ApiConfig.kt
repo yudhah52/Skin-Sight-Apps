@@ -53,7 +53,7 @@ class ApiConfig {
             return retrofit.create(ArticleApiService::class.java)
         }
 
-        fun getDetectionDiseaseApiService(): DetectionApiService{
+        fun getDetectionDiseaseApiService(): DetectionDiseaseApiService{
             val loggingInterceptor = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             } else {
@@ -70,10 +70,10 @@ class ApiConfig {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
-            return retrofit.create(DetectionApiService::class.java)
+            return retrofit.create(DetectionDiseaseApiService::class.java)
         }
 
-        fun getDetectionSkintoneApiService(): DetectionApiService{
+        fun getDetectionSkintoneApiService(): DetectionSkintoneApiService{
             val loggingInterceptor = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             } else {
@@ -90,7 +90,7 @@ class ApiConfig {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
-            return retrofit.create(DetectionApiService::class.java)
+            return retrofit.create(DetectionSkintoneApiService::class.java)
         }
     }
 }
