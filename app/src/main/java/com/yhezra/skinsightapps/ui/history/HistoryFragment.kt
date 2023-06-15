@@ -78,7 +78,7 @@ class HistoryFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(
                         requireActivity(),
-                        result.error,
+                        "Failed to load history",
                         Toast.LENGTH_SHORT
                     )
                         .show()
