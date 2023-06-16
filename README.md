@@ -8,6 +8,7 @@ SkinSight is a mobile application developed for detecting and predicting certain
 - OkHttp: A dependency of Retrofit that provides efficient HTTP client functionality.
 - Gson: A library for converting JSON responses from APIs into Java objects.
 - hdodenhof: A fast circular ImageView perfect for profile images
+- CameraX : A library that simplifies camera access and functionality in Android applications. 
 
 ## Contact
 
